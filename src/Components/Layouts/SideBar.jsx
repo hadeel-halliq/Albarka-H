@@ -1,0 +1,55 @@
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import { FiGlobe } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
+import { FiBox } from "react-icons/fi";
+import { FiMapPin } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
+
+import home from "../../images/home.png";
+// import pen from "../images/pen.png";
+import img from "../../images/img.png";
+import message from "../../images/message.png";
+
+import DashboardMenu from "./DashboardMenu";
+import SidebarHeader from "./SidebarHeader";
+
+
+export default function SideBar({ isOpen, stats }) {
+  const links = [
+    { name: "الصفحة الرئيسية", icon: home, to: "/" },
+    { name: "ادارة الحساب", icon: FiUser, to: "/admin", isComponent: true },
+    { name: "إدارة الفروع", icon: FiMapPin, to: "/branches", isComponent: true },
+    { name: "إدارة المنتجات", icon:  FiBox, to: "/products", isComponent: true},
+    { name: "إدارة الصور", icon: img, to: "/images"},
+    { name: "إدارة الرسائل", icon: message, to: "/messages" },
+    { name: "إدارة الخدمات", icon: FiSettings, to: "/services", isComponent: true},
+    { name: "روابط التواصل", icon: FiGlobe, to: "/social-links", isComponent: true },
+  ];
+  
+  const allLinks = [...links];
+  
+  return (
+    <>
+      <div className="hidden fixed xl:flex flex-col bg-white text-black p-4 h-full shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-100">
+        <SidebarHeader/>
+        <DashboardMenu links={allLinks}/>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <Motion.div
+            key="sidebar"
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 40 }}
+            className="fixed right-0 top-0 h-full w-64 bg-white shadow-lg p-4 flex flex-col z-50 xl:hidden"
+          >
+            <SidebarHeader/>
+            <DashboardMenu links={allLinks} />
+          </Motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
