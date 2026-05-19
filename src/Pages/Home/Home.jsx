@@ -165,7 +165,7 @@ export default function Home() {
   );
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-orange-50 to-gray-100 min-h-screen py-8">
+    <div className="bg-[rgba(255,248,235,1)] min-h-screen py-8">
       <div className="container mx-auto px-6">
         {/* Header Section */}
         <motion.div 

@@ -12,16 +12,14 @@ export default function DashBoardLayout() {
   };
 
   return (
-    <div className="">
-      <div className="grid grid-cols-1 xl:grid-cols-14">
-        <div className="xl:col-span-11 order-1 xl:order-1">
-          <DashboardHeader isOpen={isOpen} handleClick={handleClick} />
-          <Outlet />
-        </div>
+    <div className="grid grid-cols-1 xl:grid-cols-[1fr_250px]">
+      <div className="order-1 xl:order-1">
+        <DashboardHeader isOpen={isOpen} handleClick={handleClick} />
+        <Outlet />
+      </div>
 
-        <div className="xl:col-span-3 order-2 xl:order-2">
-          <SideBar isOpen={isOpen} handleClick={handleClick} />
-        </div>
+      <div className="order-2 xl:order-2">
+        <SideBar isOpen={isOpen} handleClick={handleClick} />
       </div>
     </div>
   );

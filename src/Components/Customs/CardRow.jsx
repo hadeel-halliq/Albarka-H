@@ -1,14 +1,12 @@
 export default function CardRow({ title, value, headerKey }) {
-  // Check if this is a mapUrl field with a valid URL
   const isMapLink = headerKey === "mapUrl" && value && value !== "-" && typeof value === "string" && (value.startsWith("http://") || value.startsWith("https://"));
-  
-  // Check if this is the variantsCount field
   const isVariantsCount = headerKey === "variantsCount";
+  const isPhone = headerKey === "phone";
   
   return (
-    <div className="flex flex-row-reverse justify-between gap-4 items-center py-2">
+    <div className="flex flex-row justify-between gap-4 items-center py-1.5">
       {/* العنوان */}
-      <span className="font-semibold text-gray-700">{title}</span>
+      <span className="text-xs font-medium text-gray-500">{title}</span>
 
       {/* القيمة */}
       {isMapLink ? (
@@ -16,16 +14,16 @@ export default function CardRow({ title, value, headerKey }) {
           href={value}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium cursor-pointer no-underline transition-colors"
+          className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-semibold text-sm cursor-pointer no-underline transition-colors hover:underline"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          موقع
+          عرض الموقع
         </a>
       ) : isVariantsCount ? (
-        <span className="inline-flex items-center justify-center min-w-[40px] px-3 py-1 bg-primary/10 text-primary font-bold rounded-full">
+        <span className="inline-flex items-center justify-center min-w-[40px] px-3 py-1 bg-primary/10 text-primary font-bold rounded-full text-sm">
           {value ?? 0}
         </span>
       ) : headerKey === "link" ? (
@@ -33,12 +31,14 @@ export default function CardRow({ title, value, headerKey }) {
           href={value}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary font-medium cursor-pointer no-underline"
+          className="text-primary font-medium text-sm cursor-pointer no-underline hover:underline"
         >
           {value}
         </a>
+      ) : isPhone ? (
+        <span className="text-sm font-semibold text-gray-800 ltr text-right" dir="ltr">{value}</span>
       ) : (
-        <span className="text-primary font-bold">{value}</span>
+        <span className="text-sm font-semibold text-gray-800">{value}</span>
       )}
     </div>
   );

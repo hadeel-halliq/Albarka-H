@@ -9,12 +9,36 @@ import {
 } from "../../services/apiServices";
 import { FiX, FiPlus, FiEdit, FiTrash2, FiCheckCircle, FiAlertCircle, FiMapPin } from "react-icons/fi";
 
+
 const headers = [
   { key: "actions", label: "الإجراءات" },
+  {
+    key: "mapUrl",
+    label: "الموقع",
+    render: (value) => {
+      if (!value || value === "-") {
+        return <span className="text-gray-400">-</span>;
+      }
+
+      return (
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium transition-colors"
+        >
+          <FiMapPin className="w-4 h-4" />
+          موقع
+        </a>
+      );
+    },
+  },
   { key: "address", label: "العنوان" },
   { key: "phone", label: "الهاتف" },
-  { key: "managerName", label: "اسم المدير" },
   { key: "workingHours", label: "أوقات العمل" },
+  { key: "managerName", label: "اسم المدير" },
+
+
 ];
 
 const cardOrder = ["address", "phone", "managerName", "workingHours", "mapUrl"];
@@ -187,25 +211,7 @@ export default function Branches() {
   );
 
   const headersWithMap = [
-    ...headers,
-    {
-      key: "mapUrl",
-      label: "الموقع",
-      render: (value, row) => {
-        if (!value || value === "-") return <span className="text-gray-400">-</span>;
-        return (
-          <a
-            href={value}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium transition-colors"
-          >
-            <FiMapPin className="w-4 h-4" />
-            موقع
-          </a>
-        );
-      }
-    }
+    ...headers
   ];
 
   return (
@@ -235,9 +241,8 @@ export default function Branches() {
           </div>
         </div>
         {error && (
-          <div className={`p-4 rounded-lg mb-4 flex items-center gap-3 ${
-            error.includes('تم') ? 'bg-green-100 border-r-4 border-green-500 text-green-700' : 'bg-red-100 border-r-4 border-red-500 text-red-700'
-          }`} dir="rtl">
+          <div className={`p-4 rounded-lg mb-4 flex items-center gap-3 ${error.includes('تم') ? 'bg-green-100 border-r-4 border-green-500 text-green-700' : 'bg-red-100 border-r-4 border-red-500 text-red-700'
+            }`} dir="rtl">
             {error.includes('تم') ? (
               <FiCheckCircle className="w-6 h-6 flex-shrink-0" />
             ) : (
@@ -247,7 +252,7 @@ export default function Branches() {
               <p className="font-bold">{error.includes('تم') ? 'نجاح!' : 'خطأ!'}</p>
               <p>{error}</p>
             </div>
-            <button 
+            <button
               onClick={() => setError("")}
               className="mr-auto hover:bg-black/10 rounded-full p-1 transition-colors"
             >
@@ -268,7 +273,7 @@ export default function Branches() {
         </div>
 
         <CardList
-          headers={[...headers, { key: "mapUrl", label: "الموقع" }]}
+          headers={[...headers,]}
           data={filteredRows}
           order={cardOrder}
           onDeleteRow={handleDelete}
@@ -276,19 +281,19 @@ export default function Branches() {
           onEditRow={openEditModal}
           rowIdKey="id"
         />
-        
+
         {showModal && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn"
             onClick={handleCloseModal}
           >
-            <div 
-              className="bg-white rounded-2xl shadow-xl w-full max-w-lg relative overflow-hidden animate-slideUp max-h-[90vh] overflow-y-auto"
+            <div
+              className="bg-white rounded-2xl shadow-xl w-full max-w-md sm:max-w-lg relative animate-slideUp"
               dir="rtl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="bg-primary/10 px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0">
+              <div className="bg-primary/10 px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0">
                 <h2 className="text-xl font-bold text-primary flex items-center gap-2">
                   {editingBranch ? (
                     <>
@@ -312,7 +317,7 @@ export default function Branches() {
               </div>
 
               {/* نموذج الإدخال */}
-              <form onSubmit={handleSubmit} className="p-6">
+              <form onSubmit={handleSubmit} className="p-4 lg:p-2">
                 <div className="grid grid-cols-1 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -325,7 +330,7 @@ export default function Branches() {
                       onChange={handleInputChange}
                       required
                       placeholder="123 شارع ستيل، بيروت"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                     />
                   </div>
 
@@ -413,7 +418,7 @@ export default function Branches() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-primary text-white font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 bg-primary text-white font-semibold py-2.5 px-2 rounded-lg hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? (
                       <>
@@ -425,7 +430,7 @@ export default function Branches() {
                       </>
                     ) : (
                       <>
-                        {editingBranch ? <FiEdit className="w-5 h-5" /> : <FiPlus className="w-5 h-5" />}
+                        {editingBranch ? <FiEdit className="hidden sm:block w-5 h-5" /> : <FiPlus className="w-5 h-5" />}
                         {editingBranch ? "حفظ التعديلات" : "إضافة الفرع"}
                       </>
                     )}
@@ -444,11 +449,11 @@ export default function Branches() {
         )}
 
         {showDeleteModal && branchToDelete && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn"
             onClick={cancelDelete}
           >
-            <div 
+            <div
               className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden animate-slideUp"
               dir="rtl"
               onClick={(e) => e.stopPropagation()}
@@ -501,3 +506,6 @@ export default function Branches() {
     </div>
   );
 }
+
+
+

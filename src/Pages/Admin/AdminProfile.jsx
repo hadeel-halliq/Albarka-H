@@ -3,13 +3,14 @@ import * as Yup from "yup";
 import { useState, useEffect } from "react";
 import { authService, getApiErrorMessage } from "../../services/apiServices";
 import Popup from "./Components/Popup";
+import { FiX } from "react-icons/fi";
 
 export default function AdminProfile() {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
+  const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [adminData, setAdminData] = useState(null);
-
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -22,7 +23,6 @@ export default function AdminProfile() {
     };
     fetchProfile();
   }, []);
-
 
   const validatePasswords = (values) => {
     const errors = {};
@@ -44,12 +44,12 @@ export default function AdminProfile() {
       setAdminData(updated?.admin || updated);
       setPopupMessage("تم تحديث البيانات بنجاح!");
       setIsSuccess(true);
-      setIsPopupOpen(true);
+      setIsProfilePopupOpen(true);
       resetForm({ values: { name: updated.admin?.name, email: updated.admin?.email } });
     } catch (error) {
       setPopupMessage(getApiErrorMessage(error));
       setIsSuccess(false);
-      setIsPopupOpen(true);
+      setIsProfilePopupOpen(true); // ✅ تم تصحيح الخطأ المطبعي
     } finally {
       setSubmitting(false);
     }
@@ -64,12 +64,12 @@ export default function AdminProfile() {
       );
       setPopupMessage("تم تغيير كلمة المرور بنجاح!");
       setIsSuccess(true);
-      setIsPopupOpen(true);
+      setIsPasswordPopupOpen(false);
       resetForm();
     } catch (error) {
       setPopupMessage(getApiErrorMessage(error));
       setIsSuccess(false);
-      setIsPopupOpen(true);
+      setIsPasswordPopupOpen(true); // ✅ فتح المودال عند الخطأ
     } finally {
       setSubmitting(false);
     }
@@ -88,187 +88,164 @@ export default function AdminProfile() {
     <div className="bg-[rgba(255,248,235,1)] min-h-screen py-8">
       <div className="container mx-auto px-6">
 
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-primary">إعدادات الحساب</h1>
+        {/* Header */}
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mb-8" dir="rtl">
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors cursor-pointer"
+            className="w-full sm:w-auto bg-red-500/10 text-red-600 border border-red-200 px-5 py-2.5 rounded-xl hover:bg-red-500 hover:text-white transition-all duration-200 font-semibold cursor-pointer"
           >
             تسجيل الخروج
           </button>
+          <h1 className="text-xl sm:text-2xl font-bold text-primary">إعدادات الحساب</h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="flex justify-center" dir="rtl">
+          {/* ✅ كارد الفورم الرئيسي */}
+          <div className="bg-gradient-to-l from-white to-primary/5 rounded-3xl shadow-lg p-6 md:p-8 border-2 border-primary/20 relative overflow-hidden w-full max-w-xl">
+            <div className="absolute top-0 left-0 w-24 h-24 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-2xl font-bold text-primary mb-6">البيانات الشخصية</h2>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-primary/20">
-            <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
-              <span>البيانات الشخصية</span>
-            </h2>
+              <Formik
+                initialValues={{ name: adminData?.name || "", email: adminData?.email || "" }}
+                enableReinitialize={true}
+                validationSchema={Yup.object({
+                  name: Yup.string().required("الاسم مطلوب"),
+                  email: Yup.string().email("صيغة البريد غير صحيحة").required("البريد الإلكتروني مطلوب"),
+                })}
+                onSubmit={handleUpdateProfile}
+              >
+                {({ isSubmitting }) => (
+                  <Form className="space-y-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">الاسم</label>
+                      <Field name="name" type="text" placeholder="أدخل اسمك" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <ErrorMessage name="name" component="p" className="text-red-500 text-xs mt-1.5" />
+                    </div>
 
-            <Formik
-              initialValues={{
-                name: adminData?.name || "",
-                email: adminData?.email || "",
-              }}
-              enableReinitialize={true}
-              validationSchema={Yup.object({
-                name: Yup.string().required("الاسم مطلوب"),
-                email: Yup.string().email("صيغة البريد غير صحيحة").required("البريد الإلكتروني مطلوب"),
-              })}
-              onSubmit={handleUpdateProfile}
-            >
-              {({ isSubmitting }) => (
-                <Form className="space-y-4">
-                  <div>
-                    <label className="block text-gray-700 font-bold mb-2">الاسم</label>
-                    <Field
-                      name="name"
-                      type="text"
-                      placeholder="أدخل اسمك"
-                      className="border border-primary rounded-lg p-3 w-full focus:outline-none focus:border-2 focus:border-primary text-right"
-                    />
-                    <ErrorMessage
-                      name="name"
-                      component="p"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+                      <Field name="email" type="email" placeholder="أدخل بريدك الإلكتروني" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <ErrorMessage name="email" component="p" className="text-red-500 text-xs mt-1.5" />
+                    </div>
 
-                  <div>
-                    <label className="block text-gray-700 font-bold mb-2">البريد الإلكتروني</label>
-                    <Field
-                      name="email"
-                      type="email"
-                      placeholder="أدخل بريدك الإلكتروني"
-                      className="border border-primary rounded-lg p-3 w-full focus:outline-none focus:border-2 focus:border-primary text-right"
-                    />
-                    <ErrorMessage
-                      name="email"
-                      component="p"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
+                    <button type="submit" disabled={isSubmitting} className="w-full bg-gradient-to-l from-primary to-primary/90 text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                      {isSubmitting ? "جاري الحفظ..." : "حفظ التغييرات"}
+                    </button>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-primary text-white px-6 py-3 rounded-lg w-full hover:bg-opacity-90 transition-colors cursor-pointer disabled:opacity-50"
-                  >
-                    {isSubmitting ? "جاري الحفظ..." : "حفظ التغييرات"}
-                  </button>
-                </Form>
-              )}
-            </Formik>
-          </div>
-
-
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-primary/20">
-            <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
-              <span>تغيير كلمة المرور</span>
-            </h2>
-
-            <Formik
-              initialValues={{
-                oldPassword: "",
-                newPassword: "",
-                confirmPassword: "",
-              }}
-              validate={validatePasswords}
-              validationSchema={Yup.object({
-                oldPassword: Yup.string().required("كلمة المرور الحالية مطلوبة"),
-                newPassword: Yup.string()
-                  .required("كلمة المرور الجديدة مطلوبة")
-                  .min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل"),
-                confirmPassword: Yup.string()
-                  .required("يرجى تأكيد كلمة المرور")
-                  .oneOf([Yup.ref("newPassword"), null], "كلمتا المرور غير متطابقتين"),
-              })}
-              onSubmit={handleChangePassword}
-            >
-              {({ isSubmitting }) => (
-                <Form className="space-y-4">
-                  <div>
-                    <label className="block text-gray-700 font-bold mb-2">كلمة المرور الحالية</label>
-                    <Field
-                      name="oldPassword"
-                      type="password"
-                      placeholder="أدخل كلمة المرور الحالية"
-                      className="border border-primary rounded-lg p-3 w-full focus:outline-none focus:border-2 focus:border-primary text-right"
-                    />
-                    <ErrorMessage
-                      name="oldPassword"
-                      component="p"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-bold mb-2">كلمة المرور الجديدة</label>
-                    <Field
-                      name="newPassword"
-                      type="password"
-                      placeholder="أدخل كلمة المرور الجديدة"
-                      className="border border-primary rounded-lg p-3 w-full focus:outline-none focus:border-2 focus:border-primary text-right"
-                    />
-                    <ErrorMessage
-                      name="newPassword"
-                      component="p"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-bold mb-2">تأكيد كلمة المرور</label>
-                    <Field
-                      name="confirmPassword"
-                      type="password"
-                      placeholder="أكد كلمة المرور الجديدة"
-                      className="border border-primary rounded-lg p-3 w-full focus:outline-none focus:border-2 focus:border-primary text-right"
-                    />
-                    <ErrorMessage
-                      name="confirmPassword"
-                      component="p"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-primary text-white px-6 py-3 rounded-lg w-full hover:bg-opacity-90 transition-colors cursor-pointer disabled:opacity-50"
-                  >
-                    {isSubmitting ? "جاري التغيير..." : "تغيير كلمة المرور"}
-                  </button>
-                </Form>
-              )}
-            </Formik>
+                    <button type="button" onClick={() => setIsPasswordPopupOpen(true)} className="w-full text-center text-primary font-semibold hover:text-primary/80 transition-colors cursor-pointer mt-2">
+                      تغيير كلمة المرور
+                    </button>
+                  </Form>
+                )}
+              </Formik>
+            </div>
           </div>
         </div>
 
+        {/* ✅ كارد معلومات الحساب */}
         {adminData && (
-          <div className="mt-8 bg-white rounded-xl shadow-lg p-6 border border-primary/20">
-            <h2 className="text-2xl font-bold text-primary mb-4">معلومات الحساب</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-primary/10 rounded-lg p-4">
-                <p className="text-gray-600 text-sm">الاسم</p>
-                <p className="text-primary font-bold text-lg">{adminData.name}</p>
-              </div>
-              <div className="bg-primary/10 rounded-lg p-4">
-                <p className="text-gray-600 text-sm">البريد الإلكتروني</p>
-                <p className="text-primary font-bold text-lg">{adminData.email}</p>
-              </div>
-              <div className="bg-primary/10 rounded-lg p-4">
-                <p className="text-gray-600 text-sm">المعرف</p>
-                <p className="text-primary font-bold text-lg">#{adminData.id}</p>
+          <div className="mt-8 bg-gradient-to-l from-white to-primary/5 rounded-3xl shadow-lg p-6 md:p-8 border-2 border-primary/20 relative overflow-hidden" dir="rtl">
+            <div className="absolute top-0 left-0 w-24 h-24 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-2xl font-bold text-primary mb-6">معلومات الحساب</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-primary/10 hover:shadow-md transition-shadow">
+                  <p className="text-gray-500 text-sm mb-1">الاسم</p>
+                  <p className="text-lg font-bold text-gray-800 truncate">{adminData.name}</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-primary/10 hover:shadow-md transition-shadow">
+                  <p className="text-gray-500 text-sm mb-1">البريد الإلكتروني</p>
+                  <p className="text-lg font-bold text-gray-800 truncate">{adminData.email}</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-primary/10 hover:shadow-md transition-shadow">
+                  <p className="text-gray-500 text-sm mb-1">المعرف</p>
+                  <p className="text-lg font-bold text-gray-800">#{adminData.id}</p>
+                </div>
               </div>
             </div>
           </div>
         )}
       </div>
 
+      {/* ✅ Popup تغيير كلمة المرور (ثابت، أبيض صلب، غير شفاف) */}
+      {isPasswordPopupOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn"
+          onClick={() => setIsPasswordPopupOpen(false)}
+        >
+          <div
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-md relative overflow-hidden animate-slideUp border border-gray-200"
+            dir="rtl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* زخرفة خلفية خفيفة وثابتة */}
+            <div className="absolute top-0 left-0 w-32 h-32 bg-primary/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-primary/10 rounded-full translate-x-1/2 translate-y-1/2"></div>
+
+            <div className="relative z-10 p-6">
+              <div className="flex justify-between items-center mb-6 border-b border-gray-200 pb-4">
+                <h2 className="text-xl font-bold text-primary flex items-center gap-2">
+                  🔑 تغيير كلمة المرور
+                </h2>
+                <button
+                  onClick={() => setIsPasswordPopupOpen(false)}
+                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full p-2 transition-all"
+                  aria-label="إغلاق"
+                >
+                  <FiX className="w-5 h-5" />
+                </button>
+              </div>
+
+              <Formik
+                initialValues={{ oldPassword: "", newPassword: "", confirmPassword: "" }}
+                validate={validatePasswords}
+                validationSchema={Yup.object({
+                  oldPassword: Yup.string().required("كلمة المرور الحالية مطلوبة"),
+                  newPassword: Yup.string().required("كلمة المرور الجديدة مطلوبة").min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل"),
+                  confirmPassword: Yup.string().required("يرجى تأكيد كلمة المرور").oneOf([Yup.ref("newPassword"), null], "كلمتا المرور غير متطابقتين"),
+                })}
+                onSubmit={handleChangePassword}
+              >
+                {({ isSubmitting }) => (
+                  <Form className="space-y-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">كلمة المرور الحالية</label>
+                      <Field name="oldPassword" type="password" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <ErrorMessage name="oldPassword" component="p" className="text-red-500 text-xs mt-1.5" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">كلمة المرور الجديدة</label>
+                      <Field name="newPassword" type="password" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <ErrorMessage name="newPassword" component="p" className="text-red-500 text-xs mt-1.5" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">تأكيد كلمة المرور</label>
+                      <Field name="confirmPassword" type="password" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <ErrorMessage name="confirmPassword" component="p" className="text-red-500 text-xs mt-1.5" />
+                    </div>
+
+                    <button type="submit" disabled={isSubmitting} className="w-full bg-gradient-to-l from-primary to-primary/90 text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-4">
+                      {isSubmitting ? "جاري التغيير..." : "تغيير كلمة المرور"}
+                    </button>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Popup الإشعار العام */}
       <Popup
-        isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
+        isOpen={isProfilePopupOpen}
+        onClose={() => setIsProfilePopupOpen(false)}
         message={popupMessage}
         isSuccess={isSuccess}
       />

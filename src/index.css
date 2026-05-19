@@ -10,7 +10,7 @@
 }
 
 /* Animations for modal */
-@keyframes fadeIn {
+ @keyframes fadeIn {
   from {
     opacity: 0;
   }
@@ -37,3 +37,6 @@
 .animate-slideUp {
   animation: slideUp 0.3s ease-out;
 }
+
+
+

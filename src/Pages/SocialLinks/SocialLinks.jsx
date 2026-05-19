@@ -23,7 +23,6 @@ const contactHeaders = [
       </a>
     ),
   },
-  { label: "اسم المنصة", key: "platformName" },
   { label: "الأيقونة", key: "icon" },
   { label: "ترتيب العرض", key: "sortOrder" },
   { 
@@ -37,6 +36,7 @@ const contactHeaders = [
       </span>
     )
   },
+  { label: "اسم المنصة", key: "platformName" },
 ];
 
 const cardOrder = ["platformName", "icon", "url", "sortOrder", "isActive"];
@@ -179,8 +179,7 @@ export default function SocialLinks() {
     <div className="bg-[rgba(255,248,235,1)] min-h-screen">
       <div className="container mx-auto px-6 overflow-hidden">
         {/* Header */}
-        <div className="flex justify-between items-center mt-10 mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">روابط التواصل الاجتماعي</h1>
+        <div className="mt-10 mb-6" dir="rtl">
           <button
             onClick={handleOpenAddModal}
             className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors font-semibold"

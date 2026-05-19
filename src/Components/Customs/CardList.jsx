@@ -31,7 +31,6 @@ export default function CardList({
   const handleDelete = async (index) => {
     const row = rows[index];
     if (onDeleteRow) {
-      // Pass the full row object directly instead of separate id and row
       onDeleteRow(row);
       return;
     }
@@ -61,13 +60,12 @@ export default function CardList({
   }, [data]);
 
   return (
-    <div className="block md:hidden space-y-4 my-10">
+    <div className="block md:hidden space-y-4 my-10" dir="rtl">
       {rows.map((row, index) => {
         const cardData = order.map((key) => {
           const header = headers.find((h) => h.key === key);
           let value = row[key];
 
-          // التعامل مع render إذا موجود
           if (header && header.render) {
             value = header.render(value, row);
           }
@@ -80,16 +78,17 @@ export default function CardList({
         });
 
         return (
-          <Card
-            key={index}
-            data={cardData}
-            onEdit={(key) => handleEdit(index, key)}
-            onDelete={() => handleDelete(index)}
-          />
+          <div key={row[rowIdKey] || index} className="animate-fadeIn">
+            <Card
+              data={cardData}
+              onEdit={(key) => handleEdit(index, key)}
+              onDelete={() => handleDelete(index)}
+            />
+          </div>
         );
       })}
 
-      {/* مودل التعديل */}
+      {/* مودل التعديل - محسّن */}
       {isModelOpen && (
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn"
@@ -101,8 +100,9 @@ export default function CardList({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="bg-primary/10 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <div className="bg-primary/10 px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0">
               <h2 className="text-xl font-bold text-primary flex items-center gap-2">
+                <FiX className="w-5 h-5 rotate-45" />
                 تعديل البيانات
               </h2>
               <button
@@ -120,7 +120,8 @@ export default function CardList({
                 type="text"
                 value={editedValue}
                 onChange={(e) => setEditedValue(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right"
+                dir="rtl"
                 autoFocus
               />
 
@@ -130,7 +131,7 @@ export default function CardList({
                   onClick={handleSave}
                   className="flex-1 bg-primary text-white font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 active:scale-[0.98] transition-all"
                 >
-                  حفظ
+                  حفظ التعديلات
                 </button>
                 <button
                   onClick={() => setIsModelOpen(false)}

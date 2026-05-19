@@ -1,6 +1,8 @@
 import pen from "../../images/pen.png";
 import deletIcon from "../../images/deletIcon.png";
 import { useEffect, useState } from "react";
+import { TfiArrowCircleLeft } from "react-icons/tfi";
+import { TfiArrowCircleRight } from "react-icons/tfi";
 
 export default function Table({
   headers,
@@ -52,9 +54,9 @@ export default function Table({
       const targetRow = tableData[editingIndex];
       await onSaveRow(targetRow?.[rowIdKey], editedRow, targetRow);
     } else {
-    setTableData((prev) =>
-      prev.map((r, i) => (i === editingIndex ? editedRow : r))
-    );
+      setTableData((prev) =>
+        prev.map((r, i) => (i === editingIndex ? editedRow : r))
+      );
     }
     setEditingIndex(null);
     setEditedRow({});
@@ -112,7 +114,7 @@ export default function Table({
                             </button>
                           </>
                         ) : (
-                          <>
+                          <div className="flex mr-[-18px]">
                             <button
                               className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-blue-50 transition-colors"
                               onClick={() => onEditRow ? onEditRow(row) : handleEdit(row, rowIndex)}
@@ -127,7 +129,7 @@ export default function Table({
                             >
                               <img src={deletIcon} alt="delete" className="w-5 h-5" />
                             </button>
-                          </>
+                          </div>
                         )}
                       </div>
                     ) : editingIndex === globalIndex ? (
@@ -157,33 +159,28 @@ export default function Table({
       </table>
       {/* pagenation */}
       <div className="flex justify-center items-center gap-3 mt-4" dir="rtl">
-        <button 
-          onClick={handleIncrement}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 rounded-2xl border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          الصفحة التالية
-        </button>
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`px-5 py-2 rounded-3xl cursor-pointer font-semibold transition-all ${
-              currentPage === i + 1
+            className={`px-5 py-2 rounded-3xl cursor-pointer font-semibold transition-all ${currentPage === i + 1
                 ? "bg-primary text-white"
                 : "bg-white text-primary hover:bg-primary/10"
-            }`}
+              }`}
           >
             {i + 1}
           </button>
         ))}
-        <button 
-          onClick={handleDecrement} 
+        <TfiArrowCircleRight
+          onClick={handleDecrement}
           disabled={currentPage === 1}
-          className="px-4 py-2 rounded-2xl border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          الصفحة السابقة
-        </button>
+          className="text-primary text-3xl font-bold cursor-pointer"
+        />
+        <TfiArrowCircleLeft
+          onClick={handleIncrement}
+          disabled={currentPage === totalPages}
+          className="text-primary text-3xl font-bold cursor-pointer"
+        />
       </div>
     </>
   );

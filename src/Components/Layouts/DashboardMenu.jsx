@@ -4,26 +4,21 @@ export default function DashboardMenu({ links }) {
   return (
     <nav className="space-y-5">
       {links.map((link, index) => (
-        <div key={index} className="flex justify-between items-center">
-          {link.counter !== undefined && link.counter !== null ? (
-            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] text-center">
-              {link.counter}
-            </span>
-          ) : (
-            <div className="w-[24px]" />
-          )}
-          <div className="flex items-center gap-3">
-            <Link to={link.to} className="font-bold text-lg">
+        <div key={index} className="flex justify-end items-center">
+          <div
+            className="group flex items-center gap-3 px-3 py-1 rounded-lg cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:shadow-sm hover:-translate-x-1"
+          >
+            <Link
+              to={link.to}
+              className="font-bold text-sm text-gray-700 group-hover:text-primary transition-colors duration-300"
+            >
               {link.name}
             </Link>
-            {link.isComponent ? (
-              <link.icon className="w-[24px] h-[24px]" />
-            ) : (
-              <img src={link.icon} className="w-[24px]" />
-            )}
+            <link.icon className="w-[24px] h-[24px] text-gray-500 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
           </div>
         </div>
       ))}
     </nav>
   );
 }
+

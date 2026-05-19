@@ -25,6 +25,7 @@ export default function ImageManagement() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
 
+
   const loadMedia = async () => {
     setLoading(true);
     try {
@@ -147,15 +148,14 @@ export default function ImageManagement() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
+    <div className="min-h-screen bg-[rgba(255,248,235,1)] overflow-x-hidden" dir="rtl">
+    
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
+      <div className="px-6 py-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h1 className="text-2xl font-bold text-gray-900">إدارة الصور</h1>
-          
           <button
             onClick={() => setShowUploadModal(true)}
-            className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition-all shadow-md hover:shadow-lg"
+            className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition-all shadow-md hover:shadow-lg cursor-pointer"
           >
             <Upload className="w-5 h-5" />
             <span>رفع صورة جديدة</span>

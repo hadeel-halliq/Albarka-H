@@ -11,9 +11,7 @@ import {
 
 const headers = [
   { key: "actions", label: "الإجراءات" },
-  { key: "name", label: "اسم المنتج" },
-  { key: "description", label: "الوصف" },
-  { key: "dimensions", label: "الأبعاد" },
+  { key: "status", label: "الحالة" },
   { 
     key: "variantsCount", 
     label: "عدد الأنواع",
@@ -23,7 +21,9 @@ const headers = [
       </span>
     )
   },
-  { key: "status", label: "الحالة" },
+  { key: "dimensions", label: "الأبعاد" },
+  { key: "description", label: "الوصف" },
+  { key: "name", label: "اسم المنتج" },
 ];
 
 const cardOrder = [
@@ -198,7 +198,7 @@ export default function Product() {
             />
             <input
               type="text"
-              placeholder="ابحث عن محتوى ..."
+              placeholder=" ابحث ضمن المحتوى..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full border-[1px] border-primary pr-8 pl-2 py-1 rounded-2xl focus:outline-none focus:border-primary focus:border-2"

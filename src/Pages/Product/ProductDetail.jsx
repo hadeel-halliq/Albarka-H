@@ -258,7 +258,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="bg-[rgba(255,248,235,1)] min-h-screen">
+    <div className="bg-[rgba(255,248,235,1)] min-h-screen" dir="rtl">
       <div className="container mx-auto px-6 overflow-hidden">
         {/* Header مع زر الرجوع */}
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4 my-6" dir="rtl">
@@ -786,7 +786,7 @@ export default function ProductDetail() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-primary text-white font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 bg-primary text-white font-semibold py-2.5 px-2 rounded-lg hover:bg-primary/90 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>
@@ -798,7 +798,7 @@ export default function ProductDetail() {
                       </>
                     ) : (
                       <>
-                        <FiEdit className="w-5 h-5" />
+                        <FiEdit className="hidden sm:block w-5 h-5" />
                         حفظ التعديلات
                       </>
                     )}
