@@ -11,6 +11,7 @@ export default function Table({
   onSaveRow,
   onEditRow,
   rowIdKey = "id",
+  isDark = false,
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState(data);
@@ -74,7 +75,7 @@ export default function Table({
 
   return (
     <>
-      <table className="min-w-[900px] table-auto w-full text-center border border-gray-200 bg-white rounded-lg overflow-hidden shadow-sm">
+      <table className={`min-w-[900px] table-auto w-full text-center border ${isDark ? "border-gray-600 bg-gray-700" : "border-gray-200 bg-white"} rounded-lg overflow-hidden shadow-sm`}>
         <thead >
           <tr className="bg-primary border-b border-gray-200">
             {headers.map((header, i) => (
@@ -84,17 +85,17 @@ export default function Table({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className={`divide-y ${isDark ? "divide-gray-600" : "divide-gray-200"}`}>
           {currentRows.map((row, rowIndex) => {
             const globalIndex = indexOfFirstRow + rowIndex;
 
             return (
               <tr
                 key={rowIndex}
-                className="hover:bg-gray-50 transition-colors"
+                className={`${isDark ? "hover:bg-gray-600" : "hover:bg-gray-50"} transition-colors`}
               >
                 {headers.map((header, colIndex) => (
-                  <td key={colIndex} className="px-6 py-4 text-right text-sm text-gray-700">
+                  <td key={colIndex} className={`px-6 py-4 text-right text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}>
                     {/*  عمود الإجراءات */}
                     {header.key === "actions" ? (
                       <div className="flex justify-center gap-2">
@@ -116,7 +117,7 @@ export default function Table({
                         ) : (
                           <div className="flex mr-[-18px]">
                             <button
-                              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-blue-50 transition-colors"
+                              className={`w-8 h-8 flex items-center justify-center rounded-lg ${isDark ? "hover:bg-blue-900/30" : "hover:bg-blue-50"} transition-colors`}
                               onClick={() => onEditRow ? onEditRow(row) : handleEdit(row, rowIndex)}
                               title="تعديل"
                             >
@@ -124,7 +125,7 @@ export default function Table({
                             </button>
                             <button
                               onClick={() => handleDelete(rowIndex)}
-                              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-50 transition-colors"
+                              className={`w-8 h-8 flex items-center justify-center rounded-lg ${isDark ? "hover:bg-red-900/30" : "hover:bg-red-50"} transition-colors`}
                               title="حذف"
                             >
                               <img src={deletIcon} alt="delete" className="w-5 h-5" />
@@ -143,7 +144,7 @@ export default function Table({
                             [header.key]: e.target.value,
                           })
                         }
-                        className="border border-gray-300 rounded-lg px-3 py-1.5 w-full focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className={`border ${isDark ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-white"} rounded-lg px-3 py-1.5 w-full focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary`}
                       />
                     ) : header.render ? (
                       header.render(row[header.key], row)
@@ -165,7 +166,7 @@ export default function Table({
             onClick={() => setCurrentPage(i + 1)}
             className={`px-5 py-2 rounded-3xl cursor-pointer font-semibold transition-all ${currentPage === i + 1
                 ? "bg-primary text-white"
-                : "bg-white text-primary hover:bg-primary/10"
+                : isDark ? "bg-gray-700 text-primary hover:bg-gray-600" : "bg-white text-primary hover:bg-primary/10"
               }`}
           >
             {i + 1}

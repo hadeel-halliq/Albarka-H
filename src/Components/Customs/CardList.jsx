@@ -3,6 +3,7 @@ import Card from "./Card";
 import { FiX } from "react-icons/fi";
 
 export default function CardList({
+  isDark = false,
   headers,
   data,
   order,
