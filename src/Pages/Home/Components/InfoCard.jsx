@@ -1,7 +1,5 @@
 
-
 import { FaArrowUpLong } from "react-icons/fa6";
-import { useState, useEffect } from "react";
 
 export default function InfoCard({
   icon,
@@ -11,29 +9,13 @@ export default function InfoCard({
   isArrow,
   gradient = "from-gray-400 to-gray-600",
 }) {
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) return savedTheme === "dark";
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
-  useEffect(() => {
-    const handleThemeChange = () => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) setIsDark(savedTheme === "dark");
-    };
-
-    window.addEventListener("storage", handleThemeChange);
-    return () => window.removeEventListener("storage", handleThemeChange);
-  }, []);
-
   // ✅ استخراج الألوان لمتغيرات لتجنب أخطاء Babel/Tailwind
-  const titleTextColor = isDark ? "text-gray-200" : "text-[rgb(83,74,64)]";
-  const numberTextColor = isDark ? "text-white" : "text-gray-800";
+  const titleTextColor = "text-[rgb(83,74,64)]";
+  const numberTextColor = "text-gray-800";
   const accentColor = "text-[rgb(77,204,49)]"; // استبدال rgba بـ rgb لأن alpha=1 غير ضروري
 
   return (
-    <div className={`relative overflow-hidden flex flex-col gap-4 ${isDark ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"} border-[1px] border-r-4 border-r-transparent px-3 py-4 rounded-2xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] w-full max-w-[300px] mx-auto sm:max-w-none sm:mx-0 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
+    <div className={`relative overflow-hidden flex flex-col gap-4 bg-white border-gray-200 border-[1px] border-r-4 border-r-transparent px-3 py-4 rounded-2xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] w-full max-w-[300px] mx-auto sm:max-w-none sm:mx-0 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
       {/* Gradient Border Top */}
       <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}></div>
       
