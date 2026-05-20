@@ -29,7 +29,8 @@ export default function ImageManagement() {
   const loadMedia = async () => {
     setLoading(true);
     try {
-      const data = await mediaService.list();
+      const response = await mediaService.list();
+      const data = response.items || response;
       setImages(
         data.map((item) => ({
           id: item.id,

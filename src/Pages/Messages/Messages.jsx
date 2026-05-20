@@ -45,7 +45,8 @@ export default function Messages() {
   const loadContacts = useCallback(async () => {
     try {
       const apiStatus = filter === "all" ? undefined : reverseStatusMap[filter];
-      const contacts = await contactsService.list(apiStatus);
+      const response = await contactsService.list(apiStatus);
+      const contacts = response.items || response;
       setFilteredData(
         contacts.map((item) => ({
           id: item.id,

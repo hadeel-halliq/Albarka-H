@@ -85,21 +85,39 @@ export default function Home() {
 
     const loadStats = async () => {
       try {
-        const payload = await dashboardService.stats();
-        
-        // Load additional counts in parallel
-        const [branches, socialLinks] = await Promise.all([
+        // Load all counts in parallel from their respective services
+        const [
+          dashboardPayload,
+          contacts,
+          products,
+          services,
+          images,
+          branches,
+          socialLinks
+        ] = await Promise.all([
+          dashboardService.stats().catch(() => ({})),
+          contactsService.list({ page: 1, limit: 1 }).then(res => res.items || []).catch(() => []),
+          productsService.list({ page: 1, limit: 1 }).catch(() => []),
+          servicesService.list({ page: 1, limit: 1, isActive: undefined }).catch(() => []),
+          mediaService.list({ page: 1, limit: 1 }).catch(() => []),
           branchesService.list().catch(() => []),
           socialLinksService.list().catch(() => [])
         ]);
         
         if (!mounted) return;
+        
+        // Extract total counts from meta if available, otherwise use array lengths
+        const contactsTotal = contacts?.meta?.total || contacts?.length || dashboardPayload?.contactsCount || dashboardPayload?.messages || 0;
+        const productsTotal = products?.meta?.total || products?.length || dashboardPayload?.productsCount || dashboardPayload?.products || 0;
+        const servicesTotal = services?.meta?.total || services?.length || dashboardPayload?.servicesCount || dashboardPayload?.services || 0;
+        const imagesTotal = images?.meta?.total || images?.length || dashboardPayload?.imagesCount || dashboardPayload?.images || 0;
+        
         setStats({
-          servicesCount: payload?.servicesCount || payload?.services || 0,
-          productsCount: payload?.productsCount || payload?.products || 0,
-          contactsCount: payload?.contactsCount || payload?.messages || 0,
-          visitorsCount: payload?.visitorsCount || payload?.visitors || 0,
-          imagesCount: payload?.imagesCount || payload?.images || 0,
+          servicesCount: servicesTotal,
+          productsCount: productsTotal,
+          contactsCount: contactsTotal,
+          visitorsCount: dashboardPayload?.visitorsCount || dashboardPayload?.visitors || 0,
+          imagesCount: imagesTotal,
           branchesCount: branches?.length || 0,
           socialLinksCount: socialLinks?.length || 0,
         });

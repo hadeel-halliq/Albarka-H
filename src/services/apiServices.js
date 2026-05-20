@@ -180,7 +180,12 @@ export const mediaService = {
     const response = await apiClient.get("/media", {
       params: { page: 1, limit: 20, ...params }
     });
-    return resolveListPayload(response);
+    
+    const data = response?.data;
+    const items = data?.data?.items || data?.items || [];
+    const meta = data?.data?.meta || data?.meta || {};
+    
+    return { items, meta };
   },
   async upload(file, altText = "") {
     if (!file) throw new Error("يرجى اختيار ملف للرفع");
@@ -205,7 +210,12 @@ export const productsService = {
         ...params          
       }
     });
-    return resolveListPayload(response);
+    
+    const data = response?.data;
+    const items = data?.data?.items || data?.items || [];
+    const meta = data?.data?.meta || data?.meta || {};
+    
+    return { items, meta };
   },
   
   async getById(id) {
@@ -252,7 +262,12 @@ export const servicesService = {
         ...params       
       }
     });
-    return resolveListPayload(response); 
+    
+    const data = response?.data;
+    const items = data?.data?.items || data?.items || [];
+    const meta = data?.data?.meta || data?.meta || {};
+    
+    return { items, meta };
   },
 
   
