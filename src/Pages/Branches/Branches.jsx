@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import searchIcon from "../../images/searchIcon.png";
 import Table from "../../Components/Customs/Table";
 import CardList from "../../Components/Customs/CardList";
 import {
@@ -44,6 +43,7 @@ const headers = [
 const cardOrder = ["address", "phone", "managerName", "workingHours", "mapUrl"];
 
 export default function Branches() {
+  const searchIcon = import.meta.env.VITE_CLOUDINARY_searchIcon
   const [rows, setRows] = useState([]);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");

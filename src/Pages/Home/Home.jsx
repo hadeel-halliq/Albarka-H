@@ -1,13 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
-import services from "../../images/services.png";
-import products from "../../images/products.png";
-import message from "../../images/message.png";
-import orangMessage from "../../images/orangMessage.png";
-import visitors from "../../images/visitors.png";
-import line from "../../images/line.png";
-
 import InfoCard from "./Components/InfoCard";
 import ChartCard from "./Components/ChatCard";
 import { dashboardService, getApiErrorMessage, contactsService, productsService, servicesService, mediaService } from "../../services/apiServices";
@@ -51,6 +44,12 @@ const messagesData = [
 ];
 
 export default function Home() {
+  const services = import.meta.env.VITE_CLOUDINARY_services
+  const products = import.meta.env.VITE_CLOUDINARY_products
+  const message = import.meta.env.VITE_CLOUDINARY_message
+  const orangMessage = import.meta.env.VITE_CLOUDINARY_orangMessage
+  const visitors = import.meta.env.VITE_CLOUDINARY_visitors
+  const line = import.meta.env.VITE_CLOUDINARY_line
   const [stats, setStats] = useState(fallbackStats);
   const [error, setError] = useState("");
   const [messagesData, setMessagesData] = useState([]);
