@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import CardList from "../../Components/Customs/CardList";
 import Table from "../../Components/Customs/Table";
 import { contactsService, getApiErrorMessage } from "../../services/apiServices";
+import { useTheme } from "../../hooks/useTheme";
 
 
 const headers = [
@@ -34,6 +35,7 @@ const reverseStatusMap = {
 };
 
 export default function Messages() {
+  const { isDark } = useTheme();
   const [filter, setFilter] = useState("all");
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState("");

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getApiErrorMessage, mediaService } from "../../services/apiServices";
 import { Upload, AlertCircle, X, Eye, Trash2 } from "lucide-react";
+import { useTheme } from "../../hooks/useTheme";
 
 export default function ImageManagement() {
+  const { isDark } = useTheme();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editImage, setEditImage] = useState(null);
@@ -148,7 +150,7 @@ export default function ImageManagement() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[rgba(255,248,235,1)] overflow-x-hidden" dir="rtl">
+    <div className={`${isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"} min-h-screen overflow-x-hidden transition-colors duration-300`} dir="rtl">
     
       {/* Header */}
       <div className="px-6 py-4">
