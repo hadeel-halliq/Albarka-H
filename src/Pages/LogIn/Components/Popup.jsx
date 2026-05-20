@@ -1,7 +1,7 @@
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { HiExclamationCircle } from "react-icons/hi";
 
-export default function Popup({ isOpen, onClose }) {
+export default function Popup({ isOpen, onClose, isDark }) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -15,7 +15,7 @@ export default function Popup({ isOpen, onClose }) {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
             <Motion.div
-              className="fixed top-1/2 left-1/2 z-50 w-11/12 max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gradient-to-br from-white to-gray-50 p-8 shadow-2xl border border-gray-200"
+              className={`fixed top-1/2 left-1/2 z-50 w-11/12 max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl ${isDark ? "bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700" : "bg-gradient-to-br from-white to-gray-50 border-gray-200"} p-8 shadow-2xl border`}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{
                 opacity: 1,
@@ -40,7 +40,7 @@ export default function Popup({ isOpen, onClose }) {
                   initial={{ scale: 0.8, rotate: -10 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", delay: 0.1 }}
-                  className="mb-4 p-3 bg-orange-100 rounded-full"
+                  className={`mb-4 p-3 ${isDark ? "bg-gray-700" : "bg-orange-100"} rounded-full`}
                 >
                   <HiExclamationCircle className="h-10 w-10 text-primary"/>
                 </Motion.div>
@@ -50,10 +50,10 @@ export default function Popup({ isOpen, onClose }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  <h2 className={`text-2xl font-bold ${isDark ? "text-white" : "text-gray-800"} mb-2`}>
                     غير مصرح لك بالدخول
                   </h2>
-                  <p className="text-gray-600 mb-6">
+                  <p className={`${isDark ? "text-gray-300" : "text-gray-600"} mb-6`}>
                     اسم المستخدم أو كلمة المرور غير صحيحة
                   </p>
                 </Motion.div>

@@ -11,6 +11,13 @@ export default function AdminProfile() {
   const [popupMessage, setPopupMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [adminData, setAdminData] = useState(null);
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -22,6 +29,18 @@ export default function AdminProfile() {
       }
     };
     fetchProfile();
+    
+    const handleThemeChange = () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setIsDark(savedTheme === "dark");
+      } else {
+        setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      }
+    };
+    
+    window.addEventListener("storage", handleThemeChange);
+    return () => window.removeEventListener("storage", handleThemeChange);
   }, []);
 
   const validatePasswords = (values) => {
@@ -85,25 +104,25 @@ export default function AdminProfile() {
   };
 
   return (
-    <div className="bg-[rgba(255,248,235,1)] min-h-screen py-8">
+    <div className={`${isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"} min-h-screen py-8 transition-colors duration-300`}>
       <div className="container mx-auto px-6">
 
         {/* Header */}
         <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mb-8" dir="rtl">
           <button
             onClick={handleLogout}
-            className="w-full sm:w-auto bg-red-500/10 text-red-600 border border-red-200 px-5 py-2.5 rounded-xl hover:bg-red-500 hover:text-white transition-all duration-200 font-semibold cursor-pointer"
+            className={`w-full sm:w-auto ${isDark ? "bg-red-500/10 text-red-400 border-red-800 hover:bg-red-500 hover:text-white" : "bg-red-500/10 text-red-600 border-red-200 hover:bg-red-500 hover:text-white"} border px-5 py-2.5 rounded-xl transition-all duration-200 font-semibold cursor-pointer`}
           >
             تسجيل الخروج
           </button>
-          <h1 className="text-xl sm:text-2xl font-bold text-primary">إعدادات الحساب</h1>
+          <h1 className={`text-xl sm:text-2xl font-bold ${isDark ? "text-primary" : "text-primary"}`}>إعدادات الحساب</h1>
         </div>
 
         <div className="flex justify-center" dir="rtl">
           {/* ✅ كارد الفورم الرئيسي */}
-          <div className="bg-gradient-to-l from-white to-primary/5 rounded-3xl shadow-lg p-6 md:p-8 border-2 border-primary/20 relative overflow-hidden w-full max-w-xl">
-            <div className="absolute top-0 left-0 w-24 h-24 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
+          <div className={`${isDark ? "bg-gradient-to-l from-gray-800 to-gray-700 border-gray-600" : "bg-gradient-to-l from-white to-primary/5 border-primary/20"} rounded-3xl shadow-lg p-6 md:p-8 border-2 relative overflow-hidden w-full max-w-xl`}>
+            <div className={`absolute top-0 left-0 w-24 h-24 ${isDark ? "bg-primary/10" : "bg-primary/5"} rounded-full -translate-x-1/2 -translate-y-1/2`}></div>
+            <div className={`absolute bottom-0 right-0 w-20 h-20 ${isDark ? "bg-primary/10" : "bg-primary/5"} rounded-full translate-x-1/2 translate-y-1/2`}></div>
             
             <div className="relative z-10">
               <h2 className="text-2xl font-bold text-primary mb-6">البيانات الشخصية</h2>
@@ -179,22 +198,22 @@ export default function AdminProfile() {
           onClick={() => setIsPasswordPopupOpen(false)}
         >
           <div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-md relative overflow-hidden animate-slideUp border border-gray-200"
+            className={`${isDark ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"} rounded-3xl shadow-2xl w-full max-w-md relative overflow-hidden animate-slideUp`}
             dir="rtl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* زخرفة خلفية خفيفة وثابتة */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-primary/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-24 h-24 bg-primary/10 rounded-full translate-x-1/2 translate-y-1/2"></div>
+            <div className={`absolute top-0 left-0 w-32 h-32 ${isDark ? "bg-primary/10" : "bg-primary/10"} rounded-full -translate-x-1/2 -translate-y-1/2`}></div>
+            <div className={`absolute bottom-0 right-0 w-24 h-24 ${isDark ? "bg-primary/10" : "bg-primary/10"} rounded-full translate-x-1/2 translate-y-1/2`}></div>
 
             <div className="relative z-10 p-6">
-              <div className="flex justify-between items-center mb-6 border-b border-gray-200 pb-4">
+              <div className={`flex justify-between items-center mb-6 ${isDark ? "border-gray-700" : "border-gray-200"} pb-4`}>
                 <h2 className="text-xl font-bold text-primary flex items-center gap-2">
                   🔑 تغيير كلمة المرور
                 </h2>
                 <button
                   onClick={() => setIsPasswordPopupOpen(false)}
-                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full p-2 transition-all"
+                  className={`text-gray-400 hover:text-red-500 ${isDark ? "hover:bg-red-900/30" : "hover:bg-red-50"} rounded-full p-2 transition-all`}
                   aria-label="إغلاق"
                 >
                   <FiX className="w-5 h-5" />
@@ -214,20 +233,20 @@ export default function AdminProfile() {
                 {({ isSubmitting }) => (
                   <Form className="space-y-5">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">كلمة المرور الحالية</label>
-                      <Field name="oldPassword" type="password" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <label className={`block text-sm font-medium ${isDark ? "text-gray-300" : "text-gray-700"} mb-2`}>كلمة المرور الحالية</label>
+                      <Field name="oldPassword" type="password" className={`w-full border ${isDark ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-white"} rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right`} />
                       <ErrorMessage name="oldPassword" component="p" className="text-red-500 text-xs mt-1.5" />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">كلمة المرور الجديدة</label>
-                      <Field name="newPassword" type="password" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <label className={`block text-sm font-medium ${isDark ? "text-gray-300" : "text-gray-700"} mb-2`}>كلمة المرور الجديدة</label>
+                      <Field name="newPassword" type="password" className={`w-full border ${isDark ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-white"} rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right`} />
                       <ErrorMessage name="newPassword" component="p" className="text-red-500 text-xs mt-1.5" />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">تأكيد كلمة المرور</label>
-                      <Field name="confirmPassword" type="password" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right bg-white" />
+                      <label className={`block text-sm font-medium ${isDark ? "text-gray-300" : "text-gray-700"} mb-2`}>تأكيد كلمة المرور</label>
+                      <Field name="confirmPassword" type="password" className={`w-full border ${isDark ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-white"} rounded-xl px-4 py-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-right`} />
                       <ErrorMessage name="confirmPassword" component="p" className="text-red-500 text-xs mt-1.5" />
                     </div>
 
