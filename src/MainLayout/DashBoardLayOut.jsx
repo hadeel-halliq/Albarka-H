@@ -1,25 +1,21 @@
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { useTheme } from "../hooks/useTheme";
 
 import SideBar from "../Components/Layouts/SideBar";
 import DashboardHeader from "../Components/Layouts/DashboardHeader";
 
 export default function DashBoardLayout() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
+  const { isDark } = useTheme();
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-[1fr_250px]">
+    <div className={`grid grid-cols-1 xl:grid-cols-[1fr_250px] min-h-screen transition-colors duration-300 ${isDark ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-primary)]'}`}>
       <div className="order-1 xl:order-1">
-        <DashboardHeader isOpen={isOpen} handleClick={handleClick} />
+        <DashboardHeader />
         <Outlet />
       </div>
 
       <div className="order-2 xl:order-2">
-        <SideBar isOpen={isOpen} handleClick={handleClick} />
+        <SideBar />
       </div>
     </div>
   );
