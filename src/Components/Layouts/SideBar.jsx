@@ -7,12 +7,14 @@ import { FiUser } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
 import { CiImageOn } from "react-icons/ci";
 import { LuMessageSquare } from "react-icons/lu";
+import { useTheme } from "../../Context/ThemeContext";
 
 import DashboardMenu from "./DashboardMenu";
 import SidebarHeader from "./SidebarHeader";
 
 
 export default function SideBar({ isOpen, stats }) {
+  const { isDark } = useTheme();
   const links = [
     { name: "الصفحة الرئيسية", icon: AiOutlineHome, to: "/" },
     { name: "ادارة الحساب", icon: FiUser, to: "/admin"},
@@ -30,7 +32,7 @@ export default function SideBar({ isOpen, stats }) {
     <>
       <div className="hidden fixed xl:flex flex-col bg-white dark:bg-[#1f2937] text-gray-800 dark:text-gray-200 p-4 h-full shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-100 transition-colors duration-300">
         <SidebarHeader/>
-        <DashboardMenu links={allLinks}/>
+        <DashboardMenu links={allLinks} isDark={isDark}/>
       </div>
 
       <AnimatePresence>
@@ -44,7 +46,7 @@ export default function SideBar({ isOpen, stats }) {
             className="fixed right-0 top-0 h-full w-54 bg-white dark:bg-[#1f2937] shadow-lg p-4 flex flex-col z-50 xl:hidden transition-colors duration-300"
           >
             <SidebarHeader/>
-            <DashboardMenu links={allLinks} />
+            <DashboardMenu links={allLinks} isDark={isDark} />
           </Motion.div>
         )}
       </AnimatePresence>
