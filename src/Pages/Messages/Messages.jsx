@@ -37,9 +37,43 @@ export default function Messages() {
   const [filter, setFilter] = useState("all");
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState("");
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
   useEffect(() => {
     document.title = "لوحة التحكم | إدارة الرسائل"
+    
+    const handleThemeChange = () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setIsDark(savedTheme === "dark");
+      } else {
+        setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      }
+    };
+    
+    window.addEventListener("storage", handleThemeChange);
+    
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const isDarkMode = document.documentElement.classList.contains("dark");
+          setIsDark(isDarkMode);
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    
+    return () => {
+      window.removeEventListener("storage", handleThemeChange);
+      observer.disconnect();
+    };
   }, []);
   
   const loadContacts = useCallback(async () => {
@@ -85,17 +119,17 @@ export default function Messages() {
   };
 
   return (
-    <div className="bg-[rgba(255,248,235,1)] min-h-screen">
+    <div className={`${isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"} min-h-screen transition-colors duration-300`}>
       <div className="container mx-auto px-6 overflow-hidden">
         <div className="my-5 flex flex-row-reverse justify-center ">
           <label
             htmlFor="filterLabel"
-            className="ml-6 bg-primary rounded-2xl p-1.5 text-white font-bold cursor-pointer"
+            className={`ml-6 bg-primary rounded-2xl p-1.5 text-white font-bold cursor-pointer ${isDark ? "hover:bg-primary/90" : ""}`}
           >
             فلترة حسب الحالة
           </label>
           <select
-            className="px-4 py-2 rounded-2xl border border-gray-300 bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors cursor-pointer"
+            className={`px-4 py-2 rounded-2xl border ${isDark ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-white text-gray-700"} shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors cursor-pointer`}
             id="filterLabel"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
@@ -107,15 +141,16 @@ export default function Messages() {
           </select>
         </div>
         <div className="overflow-x-auto hidden md:block rounded-3xl mt-10">
-          <Table headers={headers} data={filteredData} onDeleteRow={handleDelete} onSaveRow={handleSave} />
+          <Table headers={headers} data={filteredData} onDeleteRow={handleDelete} onSaveRow={handleSave} isDark={isDark} />
         </div>
-        {error ? <p className="text-red-500 text-center">{error}</p> : null}
+        {error ? <p className={`${isDark ? "text-red-400" : "text-red-500"} text-center`}>{error}</p> : null}
         <CardList
           headers={headers}
           data={filteredData}
           order={cardOrder}
           onDeleteRow={handleDelete}
           onSaveRow={handleSave}
+          isDark={isDark}
         />
       </div>
     </div>
