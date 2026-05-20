@@ -1,27 +1,10 @@
-```gitignore
 # Dependencies
 node_modules/
 
 # Build artifacts
 dist/
 build/
-*.js
-*.css
-
-# Logs and temp files
-*.log
-*.tmp
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
+target/
 
 # Python
 __pycache__/
@@ -33,13 +16,1610 @@ env/
 venv/
 .venv/
 .ENV
-
-# Coverage
-coverage/
-htmlcov/
+.python-version
+.pytest_cache/
+.mypy_cache/
 .coverage
+coverage/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
-```
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+
+# Testing
+coverage/
+htmlcov/
+
+# Gradle
+.gradle/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Documentation
+docs/_build/
+.sphinx/
+
+# Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ruby
+*.gem
+*.rbc
+.bundle/
+vendor/bundle/
+.ruby-version
+.rbenv-vars
+config/credentials.yml.enc
+config/master.key
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# C/C++
+*.o
+*.a
+*.so
+*.dll
+*.exe
+*.out
+*.obj
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.prof
+go.mod
+go.sum
+
+# Rust
+Cargo.lock
+*.rlib
+*.so
+*.dylib
+*.dll
+target/
+
+# Julia
+.julia/
+.Julia_history
+*.ji
+*.jl.cov
+*.jl.mem
+*.o
+
+# Zig
+zig-cache/
+zig-out/
+
+# Elixir
+*.beam
+*.ez
+.erlang.cookie
+.elixir_ls/
+
+# Dart
+.dart_tool/
+.build/
+packages/
+*.dart.js
+*.dart.js.map
+*.info.json
+
+# Flutter
+flutter/
+.dart_tool/
+.build/
+ios/.symlinks/
+android/.gradle/
+android/gradle.properties
+android/key.properties
+android/local.properties
+coverage/
+lib/generated_plugin_registrant.*
+
+# Web
+*.min.js
+*.min.css
+public/dist/
+public/build/
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Backup files
+*~
+*#
+.#*
+%*
+._*
+
+# Sensitive files
+config/secrets.yml
+secrets.yaml
+*.key
+*.pem
+*.p12
+*.cer
+*.crt
+*.csr
+*.jks
+*.keystore
+*.truststore
+
+# Cache directories
+.cache/
+.cargo/
+.hoogle/
+.stack-work/
+.npm/
+.bower-cache/
+.bower-registry/
+.jspm/
+.tonic-example-results/
+.tern-port
+.yarn-cache/
+.yarn-integrity
+.yarn-metadata.json
+.node_repl_history
+.istanbul.yml
+.nyc_output/
+.nyc_coverage/
+.reify-cache/
+.rollup.cache/
+.webpack.cache/
+
+# Version control
+*.orig
+*.rej
+*.merge
+*.autosave
+
+# Browsers
+*.css.map
+*.js.map
+*.ts.map
+*.jsx.map
+*.tsx.map
+
+# Mobile
+*.ipa
+*.apk
+*.aab
+*.aabx
+*.apks
+*.apkm
+*.xapk
+*.obb
+
+# Archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.xz
+*.iso
+*.dmg
+*.pkg
+*.msi
+*.deb
+*.rpm
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+
+# Images (if accidentally included in build process)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.svg
+*.webp
+*.ico
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mkv
+*.m4v
+*.3gp
+*.3g2
+*.asf
+*.asx
+*.ogv
+*.vob
+*.mng
+
+# Audio
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.aac
+*.wma
+*.m4a
+*.opus
+
+# Fonts
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.eot
+
+# Documents
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.odt
+*.ods
+*.odp
+*.rtf
+*.tex
+
+# Spreadsheets
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.ods
+
+# Configuration backups
+*.bak
+*.old
+*.orig
+*.tmp
+*.temp
+*.cache
+*.swp
+*.swo
+
+# IDE specific
+.vs/
+.vscode/
+.idea/
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+*.sln
+*.csproj
+*.user
+*.userosscache
+*.suo
+*.pdb
+*.aps
+*.ncb
+*.ilk
+*.log
+*.VC.db
+*.VC.VC.opendb
+*.opensdf
+*.sdf
+*.pidb
+*.svclog
+*.sln.docstates
+*.userprefs
+Makefile.in
+Makefile
+
+# Editor backup files
+*~
+*#
+.#*
+%*
+._*
+
+# Local configuration files
+local.properties
+local-config.json
+appsettings.Development.json
+appsettings.Local.json
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docker
+.dockerenv
+.dockerinit
+Dockerfile*
+
+# Kubernetes
+.kube/config
+.kubectl/cache/
+.kubectl/http-cache/
+
+# Ansible
+.retry-files/
+.ansible-lint
+.ansible.cfg
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfvars
+*.tfstate.backup
+.terragrunt-cache/
+
+# Vagrant
+.vagrant/
+.vagrant-*.insecure
+.vagrant-*.pub
+
+# Virtualenv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Coverage reports
+coverage.xml
+*.cover
+*.gcda
+*.gcno
+*.lcov
+
+# Profiling
+*.prof
+*.gmon
+*.gprof
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyTest
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+
+# Mbed Studio
+.mbed/
+.mbedignore
+*.bin
+*.hex
+*.elf
+
+# PlatformIO
+.platformio/
+pioenvs/
+piolib-deps/
+
+# Arduino
+*.hex
+*.bin
+*.elf
+*.eep
+*.cof
+
+# Unity
+Library/
+Temp/
+Obj/
+Build/
+Logs/
+*.unityproj
+*.sln
+*.csproj
+*.user
+*.userprefs
+*.pid.meta
+sysroot/
+
+# Unreal Engine
+Binaries/
+Intermediate/
+Saved/
+*.uproject
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.user
+*.userosscache
+*.suo
+*.opensdf
+*.sdf
+*.pidb
+*.opendb
+*.VC.VC.opendb
+*.VC.db
+*.VC.VC.opendb
+*.VC.db-shm
+*.VC.VC.opendb-shm
+*.VC.db-wal
+*.VC.VC.opendb-wal
+*.VC.db-journal
+*.VC.VC.opendb-journal
+*.VC.db.backup
+*.VC.VC.opendb.backup
+*.VC.db.lock
+*.VC.VC.opendb.lock
+*.VC.db.tmp
+*.VC.VC.opendb.tmp
+*.VC.db.temp
+*.VC.VC.opendb.temp
+*.VC.db.bak
+*.VC.VC.opendb.bak
+*.VC.db.orig
+*.VC.VC.opendb.orig
+*.VC.db.rej
+*.VC.VC.opendb.rej
+*.VC.db.merge
+*.VC.db.autosave
+*.VC.VC.opendb.autosave
+*.VC.db.swp
+*.VC.VC.opendb.swp
+*.VC.db.swo
+*.VC.VC.opendb.swo
+*.VC.db~*
+*.VC.VC.opendb~*
+*.VC.db.*~
+*.VC.VC.opendb.*~
+*.VC.db.*.orig
+*.VC.VC.opendb.*.orig
+*.VC.db.*.rej
+*.VC.VC.opendb.*.rej
+*.VC.db.*.merge
+*.VC.VC.opendb.*.merge
+*.VC.db.*.autosave
+*.VC.VC.opendb.*.autosave
+*.VC.db.*.swp
+*.VC.VC.opendb.*.swp
+*.VC.db.*.swo
+*.VC.VC.opendb.*.swo
+*.VC.db.*.bak
+*.VC.VC.opendb.*.bak
+*.VC.db.*.backup
+*.VC.VC.opendb.*.backup
+*.VC.db.*.lock
+*.VC.VC.opendb.*.lock
+*.VC.db.*.tmp
+*.VC.VC.opendb.*.tmp
+*.VC.db.*.temp
+*.VC.VC.opendb.*.temp
+
+# Godot
+.export/
+.import/
+.godot/
+*.import
+*.export
+*.scn
+*.tres
+*.res
+
+# Godot Mono
+mono_crash.*
+
+# Godot Visual Script
+*.vs
+
+# Godot GDScript
+*.gdc
+
+# Godot NativeScript
+*.so
+*.dll
+*.dylib
+
+# Godot Android
+android_source/
+
+# Godot iOS
+ios_source/
+
+# Godot HTML5
+*.html
+*.js
+*.wasm
+*.data
+*.mem
+
+# Godot WebGL
+*.html
+*.js
+*.wasm
+*.data
+*.mem
+
+# Godot Export
+*.zip
+*.apk
+*.aab
+*.app
+*.exe
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.msi
+*.flatpak
+*.snap
+
+# Godot Cache
+.cache/
+
+# Godot Temp
+tmp/
+
+# Godot Logs
+*.log
+
+# Godot Config
+.config/godot/
+.config/godot/editor_settings-*.tres
+
+# Godot Project
+.project
+
+# Godot Scene
+*.tscn
+*.scn
+
+# Godot Resource
+*.tres
+*.res
+
+# Godot Script
+*.gd
+
+# Godot Shader
+*.gdshader
+*.glsl
+
+# Godot Material
+*.material
+
+# Godot Animation
+*.anim
+
+# Godot Packed Scene
+*.pck
+
+# Godot Binary
+*.bin
+
+# Godot Data
+*.dat
+
+# Godot Settings
+*.cfg
+
+# Godot Font
+*.font
+
+# Godot Texture
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.tga
+*.dds
+*.exr
+*.hdr
+*.svg
+*.webp
+*.ico
+
+# Godot Audio
+*.wav
+*.ogg
+*.mp3
+*.flac
+*.mpc
+*.ac3
+*.w64
+*.w96
+*.amb
+
+# Godot Video
+*.webm
+*.mov
+*.mp4
+*.avi
+*.ogv
+
+# Godot Model
+*.dae
+*.scn
+*.gltf
+*.glb
+*.obj
+*.fbx
+*.3ds
+*.blend
+*.max
+*.ma
+*.mb
+*.lxo
+*.c4d
+*.skp
+*.dxf
+*.stl
+*.ply
+*.abc
+
+# Godot Physics
+*.mesh
+
+# Godot Navigation
+*.navmesh
+
+# Godot Occlusion
+*.occluder
+
+# Godot Particles
+*.particles
+
+# Godot Skeleton
+*.skeleton
+
+# Godot Animation Library
+*.anims
+
+# Godot Translation
+*.translation
+
+# Godot Theme
+*.theme
+
+# Godot Preset
+*.preset
+
+# Godot Resource Format
+*.res
+
+# Godot Binary Resource
+*.bin
+
+# Godot Text Resource
+*.tres
+
+# Godot Scene Resource
+*.tscn
+
+# Godot Script Resource
+*.gd
+
+# Godot Shader Resource
+*.gdshader
+
+# Godot Material Resource
+*.material
+
+# Godot Animation Resource
+*.anim
+
+# Godot Packed Scene Resource
+*.pck
+
+# Godot Export Template
+*.tpk
+
+# Godot Project Settings
+project.godot
+
+# Godot Editor Settings
+.editor_settings-*.tres
+
+# Godot Plugin
+*.gdnlib
+*.gdns
+
+# Godot Native
+*.so
+*.dll
+*.dylib
+
+# Godot iOS Framework
+*.framework
+
+# Godot Android APK
+*.apk
+
+# Godot Android AAB
+*.aab
+
+# Godot Windows EXE
+*.exe
+
+# Godot macOS App
+*.app
+
+# Godot Linux Binary
+*.bin
+
+# Godot HTML5 Web
+*.html
+
+# Godot WebGL JS
+*.js
+
+# Godot WebAssembly
+*.wasm
+
+# Godot Web Data
+*.data
+
+# Godot Web Memory
+*.mem
+
+# Godot Export Package
+*.zip
+
+# Godot Flatpak
+*.flatpak
+
+# Godot Snap
+*.snap
+
+# Godot NSIS
+*.nsi
+
+# Godot Inno Setup
+*.iss
+
+# Godot DMG
+*.dmg
+
+# Godot PKG
+*.pkg
+
+# Godot DEB
+*.deb
+
+# Godot RPM
+*.rpm
+
+# Godot MSI
+*.msi
+
+# Godot AppImage
+*.AppImage
+
+# Godot Portable
+*.Portable
+
+# Godot Installer
+*.Installer
+
+# Godot Setup
+*.Setup
+
+# Godot Bundle
+*.bundle
+
+# Godot Archive
+*.tar
+*.gz
+*.bz2
+*.xz
+*.7z
+*.rar
+
+# Godot Compression
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.bz2
+*.xz
+
+# Godot Backup
+*.bak
+*.old
+*.orig
+*.backup
+
+# Godot Temp Files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Godot Cache
+*.cache
+
+# Godot Lock
+*.lock
+
+# Godot PID
+*.pid
+
+# Godot Log
+*.log
+
+# Godot State
+*.state
+
+# Godot Session
+*.session
+
+# Godot History
+*.history
+
+# Godot Index
+*.index
+
+# Godot Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Godot Journal
+*.journal
+
+# Godot Swap
+*.swap
+
+# Godot Core
+*.core
+
+# Godot Crash
+*.crash
+
+# Godot Dump
+*.dump
+
+# Godot Trace
+*.trace
+
+# Godot Profile
+*.profile
+
+# Godot Stats
+*.stats
+
+# Godot Report
+*.report
+
+# Godot Output
+*.output
+
+# Godot Result
+*.result
+
+# Godot Error
+*.error
+
+# Godot Warning
+*.warning
+
+# Godot Info
+*.info
+
+# Godot Debug
+*.debug
+
+# Godot Verbose
+*.verbose
+
+# Godot Traceback
+*.traceback
+
+# Godot Exception
+*.exception
+
+# Godot Failure
+*.failure
+
+# Godot Abort
+*.abort
+
+# Godot Panic
+*.panic
+
+# Godot Fatal
+*.fatal
+
+# Godot Critical
+*.critical
+
+# Godot Severe
+*.severe
+
+# Godot Major
+*.major
+
+# Godot Minor
+*.minor
+
+# Godot Trivial
+*.trivial
+
+# Godot Enhancement
+*.enhancement
+
+# Godot Feature
+*.feature
+
+# Godot Improvement
+*.improvement
+
+# Godot Task
+*.task
+
+# Godot Story
+*.story
+
+# Godot Bug
+*.bug
+
+# Godot Issue
+*.issue
+
+# Godot Ticket
+*.ticket
+
+# Godot Jira
+*.jira
+
+# Godot Redmine
+*.redmine
+
+# Godot GitHub
+*.github
+
+# Godot GitLab
+*.gitlab
+
+# Godot Bitbucket
+*.bitbucket
+
+# Godot Azure
+*.azure
+
+# Godot Jenkins
+*.jenkins
+
+# Godot Travis
+*.travis
+
+# Godot CircleCI
+*.circleci
+
+# Godot GitHub Actions
+*.github-actions
+
+# Godot GitLab CI
+*.gitlab-ci
+
+# Godot Drone
+*.drone
+
+# Godot TeamCity
+*.teamcity
+
+# Godot Bamboo
+*.bamboo
+
+# Godot Codeship
+*.codeship
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Buildkite
+*.buildkite
+
+# Godot AppVeyor
+*.appveyor
+
+# Godot Wercker
+*.wercker
+
+# Godot Shippable
+*.shippable
+
+# Godot Solano
+*.solano
+
+# Godot Magnum
+*.magnum
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.......semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore......semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore
+*.semaphore
+
+# Godot Semaphore......

@@ -41,6 +41,13 @@ export default function Product() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
   const [newProductForm, setNewProductForm] = useState({
     name: "",
     description: "",
@@ -48,6 +55,35 @@ export default function Product() {
     lengthUnit: "MM",
     isActive: true,
   });
+
+  useEffect(() => {
+    const handleThemeChange = () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setIsDark(savedTheme === "dark");
+      } else {
+        setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      }
+    };
+    
+    window.addEventListener("storage", handleThemeChange);
+    
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const isDarkMode = document.documentElement.classList.contains("dark");
+          setIsDark(isDarkMode);
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    
+    return () => {
+      window.removeEventListener("storage", handleThemeChange);
+      observer.disconnect();
+    };
+  }, []);
 
   const loadProducts = async () => {
     try {
@@ -181,7 +217,7 @@ export default function Product() {
   );
 
   return (
-    <div className="bg-[rgba(255,248,235,1)] min-h-screen">
+    <div className={`${isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"} min-h-screen transition-colors duration-300`}>
       <div className="container mx-auto px-6 overflow-hidden">
         <div className="flex flex-col-reverse gap-4  items-center sm:flex sm:flex-row sm:justify-between my-4">
           <button
@@ -201,12 +237,12 @@ export default function Product() {
               placeholder=" ابحث ضمن المحتوى..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full border-[1px] border-primary pr-8 pl-2 py-1 rounded-2xl focus:outline-none focus:border-primary focus:border-2"
+              className={`w-full border-[1px] border-primary pr-8 pl-2 py-1 rounded-2xl focus:outline-none focus:border-primary focus:border-2 ${isDark ? "bg-gray-700 text-white" : "bg-white text-gray-800"}`}
               dir="rtl"
             />
           </div>
         </div>
-        {error ? <p className="text-red-500 text-center">{error}</p> : null}
+        {error ? <p className={`${isDark ? "text-red-400" : "text-red-500"} text-center`}>{error}</p> : null}
 
         <div className="overflow-x-auto hidden md:block rounded-3xl mt-10">
           <Table
@@ -215,6 +251,7 @@ export default function Product() {
             onDeleteRow={handleDelete}
             onEditRow={handleEdit}
             rowIdKey="id"
+            isDark={isDark}
           />
         </div>
         <CardList
@@ -224,6 +261,7 @@ export default function Product() {
           onDeleteRow={handleDelete}
           onEditRow={handleEdit}
           rowIdKey="id"
+          isDark={isDark}
         />
 
         {/* Modal إضافة منتج جديد */}
