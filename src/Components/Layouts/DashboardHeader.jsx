@@ -97,7 +97,7 @@ export default function DashboardHeader() {
             <h2 className={`hidden xl:block ${isDark ? "text-white" : "text-gray-800"}`}>{adminName}</h2>
           </div>
           <div className="xl:hidden">
-            <button onClick={handleClick}>
+            {/* <button >
               <AnimatePresence mode="wait" initial={false}>
                 {isOpen ? (
                   <Motion.div
@@ -121,7 +121,7 @@ export default function DashboardHeader() {
                   </Motion.div>
                 )}
               </AnimatePresence>
-            </button>
+            </button> */}
           </div>
         </div>
 
