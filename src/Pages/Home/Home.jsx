@@ -65,18 +65,18 @@ export default function Home() {
         // Load all counts in parallel from their respective services
         const [
           dashboardPayload,
-          contacts,
-          products,
-          services,
-          images,
+          contactsResult,
+          productsResult,
+          servicesResult,
+          imagesResult,
           branches,
           socialLinks
         ] = await Promise.all([
           dashboardService.stats().catch(() => ({})),
-          contactsService.list({ page: 1, limit: 1 }).then(res => res.items || []).catch(() => []),
-          productsService.list({ page: 1, limit: 1 }).catch(() => []),
-          servicesService.list({ page: 1, limit: 1, isActive: undefined }).catch(() => []),
-          mediaService.list({ page: 1, limit: 1 }).catch(() => []),
+          contactsService.list({ page: 1, limit: 1 }).catch(() => ({ items: [], meta: {} })),
+          productsService.list({ page: 1, limit: 1 }).catch(() => ({ items: [], meta: {} })),
+          servicesService.list({ page: 1, limit: 1, isActive: undefined }).catch(() => ({ items: [], meta: {} })),
+          mediaService.list({ page: 1, limit: 1 }).catch(() => ({ items: [], meta: {} })),
           branchesService.list().catch(() => []),
           socialLinksService.list().catch(() => [])
         ]);
@@ -84,10 +84,15 @@ export default function Home() {
         if (!mounted) return;
         
         // Extract total counts from meta if available, otherwise use array lengths
-        const contactsTotal = contacts?.meta?.total || contacts?.length || dashboardPayload?.contactsCount || dashboardPayload?.messages || 0;
-        const productsTotal = products?.meta?.total || products?.length || dashboardPayload?.productsCount || dashboardPayload?.products || 0;
-        const servicesTotal = services?.meta?.total || services?.length || dashboardPayload?.servicesCount || dashboardPayload?.services || 0;
-        const imagesTotal = images?.meta?.total || images?.length || dashboardPayload?.imagesCount || dashboardPayload?.images || 0;
+        const contacts = contactsResult?.items || [];
+        const products = productsResult?.items || [];
+        const services = servicesResult?.items || [];
+        const images = imagesResult?.items || [];
+        
+        const contactsTotal = contactsResult?.meta?.total ?? contacts.length ?? dashboardPayload?.contactsCount ?? dashboardPayload?.messages ?? 0;
+        const productsTotal = productsResult?.meta?.total ?? products.length ?? dashboardPayload?.productsCount ?? dashboardPayload?.products ?? 0;
+        const servicesTotal = servicesResult?.meta?.total ?? services.length ?? dashboardPayload?.servicesCount ?? dashboardPayload?.services ?? 0;
+        const imagesTotal = imagesResult?.meta?.total ?? images.length ?? dashboardPayload?.imagesCount ?? dashboardPayload?.images ?? 0;
         
         setStats({
           servicesCount: servicesTotal,
