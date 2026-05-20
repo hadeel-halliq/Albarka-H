@@ -7,33 +7,12 @@ import { FiUser } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
 import { CiImageOn } from "react-icons/ci";
 import { LuMessageSquare } from "react-icons/lu";
-import { useEffect, useState } from "react";
 
 import DashboardMenu from "./DashboardMenu";
 import SidebarHeader from "./SidebarHeader";
 
 
 export default function SideBar({ isOpen, stats }) {
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      return savedTheme === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
-  useEffect(() => {
-    const handleThemeChange = () => {
-      const savedTheme = localStorage.getItem("theme");
-      setIsDark(savedTheme === "dark");
-    };
-    
-    handleThemeChange();
-    
-    window.addEventListener("storage", handleThemeChange);
-    return () => window.removeEventListener("storage", handleThemeChange);
-  }, []);
-
   const links = [
     { name: "الصفحة الرئيسية", icon: AiOutlineHome, to: "/" },
     { name: "ادارة الحساب", icon: FiUser, to: "/admin"},
@@ -49,9 +28,9 @@ export default function SideBar({ isOpen, stats }) {
   
   return (
     <>
-      <div className={`hidden fixed xl:flex flex-col ${isDark ? "bg-[#1f2937]" : "bg-white"} text-gray-800 p-4 h-full shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-100 `}>
+      <div className="hidden fixed xl:flex flex-col bg-white dark:bg-[#1f2937] text-gray-800 dark:text-gray-200 p-4 h-full shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-100 transition-colors duration-300">
         <SidebarHeader/>
-        <DashboardMenu isDark={isDark} links={allLinks}/>
+        <DashboardMenu links={allLinks}/>
       </div>
 
       <AnimatePresence>
@@ -62,10 +41,10 @@ export default function SideBar({ isOpen, stats }) {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 40 }}
-            className={`fixed right-0 top-0 h-full w-54 ${isDark ? "bg-[#1f2937]" : "bg-white"} shadow-lg p-4 flex flex-col z-50 xl:hidden`}
+            className="fixed right-0 top-0 h-full w-54 bg-white dark:bg-[#1f2937] shadow-lg p-4 flex flex-col z-50 xl:hidden transition-colors duration-300"
           >
             <SidebarHeader/>
-            <DashboardMenu isDark={isDark} links={allLinks} />
+            <DashboardMenu links={allLinks} />
           </Motion.div>
         )}
       </AnimatePresence>
