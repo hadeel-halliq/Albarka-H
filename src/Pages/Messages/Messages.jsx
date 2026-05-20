@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import CardList from "../../Components/Customs/CardList";
 import Table from "../../Components/Customs/Table";
 import { contactsService, getApiErrorMessage } from "../../services/apiServices";
+import Popup from "./Components/Popup";
 
 
 const headers = [
@@ -37,6 +38,9 @@ export default function Messages() {
   const [filter, setFilter] = useState("all");
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [isPopupSuccess, setIsPopupSuccess] = useState(false);
 
   useEffect(() => {
     document.title = "لوحة التحكم | إدارة الرسائل"
@@ -85,6 +89,13 @@ export default function Messages() {
     }
   };
 
+  // عرض رسالة عند النقر على صف
+  const handleRowClick = (row) => {
+    setPopupMessage(`الرسالة من: ${row.name}\nالبريد الإلكتروني: ${row.email}\nالموضوع: ${row.subject}`);
+    setIsPopupSuccess(true);
+    setIsPopupOpen(true);
+  };
+
   return (
     <div className="bg-[rgba(255,248,235,1)] min-h-screen">
       <div className="container mx-auto px-6 overflow-hidden">
@@ -108,7 +119,7 @@ export default function Messages() {
           </select>
         </div>
         <div className="overflow-x-auto hidden md:block rounded-3xl mt-10">
-          <Table headers={headers} data={filteredData} onDeleteRow={handleDelete} onSaveRow={handleSave} />
+          <Table headers={headers} data={filteredData} onDeleteRow={handleDelete} onSaveRow={handleSave} onRowClick={handleRowClick} />
         </div>
         {error ? <p className="text-red-500 text-center">{error}</p> : null}
         <CardList
@@ -117,6 +128,14 @@ export default function Messages() {
           order={cardOrder}
           onDeleteRow={handleDelete}
           onSaveRow={handleSave}
+          onRowClick={handleRowClick}
+        />
+        <Popup 
+          isOpen={isPopupOpen} 
+          onClose={() => setIsPopupOpen(false)} 
+          message={popupMessage} 
+          isSuccess={isPopupSuccess}
+          title="تفاصيل الرسالة"
         />
       </div>
     </div>

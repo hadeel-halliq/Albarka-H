@@ -2,10 +2,11 @@ import { useState } from "react";
 import CardRow from "./CardRow";
 import { FiTrash2, FiX, FiAlertCircle, FiEdit, FiMapPin } from "react-icons/fi";
 
-export default function Card({ data, onEdit, onDelete }) {
+export default function Card({ data, onEdit, onDelete, onClick }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
     setShowDeleteModal(true);
   };
 
@@ -21,7 +22,8 @@ export default function Card({ data, onEdit, onDelete }) {
   return (
     <>
       <div 
-        className="bg-gradient-to-l from-white to-primary/5 rounded-3xl shadow-lg p-5 border-2 border-primary/20 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] relative overflow-hidden group"
+        className="bg-gradient-to-l from-white to-primary/5 rounded-3xl shadow-lg p-5 border-2 border-primary/20 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] relative overflow-hidden group cursor-pointer"
+        onClick={onClick}
         dir="rtl"
       >
         {/* زخرفة خلفية */}
