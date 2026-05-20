@@ -20,8 +20,13 @@ export default function DashboardHeader() {
   const { isDark, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [adminName, setAdminName] = useState("مرحبا");
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const iconStyle = "text-3xl cursor-pointer text-primary";
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     const fetchAdminName = async () => {
