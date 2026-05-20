@@ -10,6 +10,7 @@ export default function Table({
   onDeleteRow,
   onSaveRow,
   onEditRow,
+  onRowClick,
   rowIdKey = "id",
 }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -91,7 +92,8 @@ export default function Table({
             return (
               <tr
                 key={rowIndex}
-                className="hover:bg-gray-50 transition-colors"
+                className="hover:bg-gray-50 transition-colors cursor-pointer"
+                onClick={() => onRowClick && onRowClick(row)}
               >
                 {headers.map((header, colIndex) => (
                   <td key={colIndex} className="px-6 py-4 text-right text-sm text-gray-700">

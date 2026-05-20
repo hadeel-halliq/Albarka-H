@@ -9,6 +9,7 @@ export default function CardList({
   onDeleteRow,
   onSaveRow,
   onEditRow,
+  onRowClick,
   rowIdKey = "id",
 }) {
   const [rows, setRows] = useState(data);
@@ -83,6 +84,7 @@ export default function CardList({
               data={cardData}
               onEdit={(key) => handleEdit(index, key)}
               onDelete={() => handleDelete(index)}
+              onClick={() => onRowClick && onRowClick(row)}
             />
           </div>
         );
