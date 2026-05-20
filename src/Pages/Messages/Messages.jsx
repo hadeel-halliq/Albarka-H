@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import CardList from "../../Components/Customs/CardList";
 import Table from "../../Components/Customs/Table";
 import { contactsService, getApiErrorMessage } from "../../services/apiServices";
-import Popup from "./Components/Popup";
+import Popup from "../../Pages/Admin/Components/Popup";
 
 
 const headers = [
   { label: "الإجراءات", key: "actions" },
+  { label: "تاريخ الإرسال", key: "date" },
   { label: "الحالة", key: "status" },
-  { label: "التاريخ", key: "date" },
-  { label: "الموضوع", key: "subject" },
+  { label: "الهاتف", key: "phone" },
   { 
     label: "البريد الإلكتروني", 
     key: "email",
@@ -22,7 +22,7 @@ const headers = [
   { label: "اسم المرسل", key: "name" },
 ];
 
-const cardOrder = ["name", "email", "subject", "date", "status"];
+const cardOrder = ["name", "email", "phone", "date", "status"];
 const statusMap = {
   UNREAD: "جديد",
   READ: "مقروء",
@@ -56,7 +56,8 @@ export default function Messages() {
           id: item.id,
           name: item.name,
           email: item.email,
-          subject: item.message,
+          phone: item.phone || "-",
+          message: item.message,
           date: item.createdAt?.slice(0, 10) || "-",
           status: statusMap[item.status] || item.status,
         }))
@@ -91,7 +92,7 @@ export default function Messages() {
 
   // عرض رسالة عند النقر على صف
   const handleRowClick = (row) => {
-    setPopupMessage(`الرسالة من: ${row.name}\nالبريد الإلكتروني: ${row.email}\nالموضوع: ${row.subject}`);
+    setPopupMessage(`الرسالة من: ${row.name}\nالبريد الإلكتروني: ${row.email}\nالهاتف: ${row.phone}\nالموضوع: ${row.message}`);
     setIsPopupSuccess(true);
     setIsPopupOpen(true);
   };
