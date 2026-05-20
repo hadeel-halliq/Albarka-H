@@ -7,50 +7,12 @@ import { FiUser } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
 import { CiImageOn } from "react-icons/ci";
 import { LuMessageSquare } from "react-icons/lu";
-import { useEffect, useState } from "react";
 
 import DashboardMenu from "./DashboardMenu";
 import SidebarHeader from "./SidebarHeader";
 
 
 export default function SideBar({ isOpen, stats }) {
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      return savedTheme === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
-  useEffect(() => {
-    const handleThemeChange = () => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        setIsDark(savedTheme === "dark");
-      } else {
-        setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
-      }
-    };
-    
-    window.addEventListener("storage", handleThemeChange);
-    
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === "class") {
-          const isDarkMode = document.documentElement.classList.contains("dark");
-          setIsDark(isDarkMode);
-        }
-      });
-    });
-    
-    observer.observe(document.documentElement, { attributes: true });
-    
-    return () => {
-      window.removeEventListener("storage", handleThemeChange);
-      observer.disconnect();
-    };
-  }, []);
-
   const links = [
     { name: "الصفحة الرئيسية", icon: AiOutlineHome, to: "/" },
     { name: "ادارة الحساب", icon: FiUser, to: "/admin"},

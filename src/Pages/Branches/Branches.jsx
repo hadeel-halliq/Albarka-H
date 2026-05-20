@@ -62,6 +62,43 @@ export default function Branches() {
   const [branchToDelete, setBranchToDelete] = useState(null);
   const navigate = useNavigate();
 
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  useEffect(() => {
+    const handleThemeChange = () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setIsDark(savedTheme === "dark");
+      } else {
+        setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      }
+    };
+    
+    window.addEventListener("storage", handleThemeChange);
+    
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const isDarkMode = document.documentElement.classList.contains("dark");
+          setIsDark(isDarkMode);
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    
+    return () => {
+      window.removeEventListener("storage", handleThemeChange);
+      observer.disconnect();
+    };
+  }, []);
+
   const loadBranches = async () => {
     try {
       const branches = await branchesService.list();
@@ -215,11 +252,11 @@ export default function Branches() {
   ];
 
   return (
-    <div className="bg-[rgba(255,248,235,1)] min-h-screen">
+    <div className={`${isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"} min-h-screen transition-colors duration-300`}>
       <div className="container mx-auto px-6 overflow-hidden">
         <div className="flex flex-col-reverse gap-4 items-center sm:flex sm:flex-row sm:justify-between my-4">
           <button
-            className="w-44 bg-primary text-white font-bold py-2 rounded-2xl cursor-pointer"
+            className="w-44 bg-primary text-white font-bold py-2 rounded-2xl cursor-pointer hover:bg-primary/90 transition-all"
             onClick={openAddModal}
           >
             إضافة فرع جديد+
@@ -235,7 +272,7 @@ export default function Branches() {
               placeholder="ابحث عن فرع ..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full border-[1px] border-primary pr-8 pl-2 py-1 rounded-2xl focus:outline-none focus:border-primary focus:border-2"
+              className={`w-full border-[1px] border-primary pr-8 pl-2 py-1 rounded-2xl focus:outline-none focus:border-primary focus:border-2 ${isDark ? "bg-gray-700 text-white" : "bg-white text-gray-800"}`}
               dir="rtl"
             />
           </div>
@@ -269,6 +306,7 @@ export default function Branches() {
             onSaveRow={handleSave}
             onEditRow={openEditModal}
             rowIdKey="id"
+            isDark={isDark}
           />
         </div>
 
@@ -280,6 +318,7 @@ export default function Branches() {
           onSaveRow={handleSave}
           onEditRow={openEditModal}
           rowIdKey="id"
+          isDark={isDark}
         />
 
         {showModal && (
