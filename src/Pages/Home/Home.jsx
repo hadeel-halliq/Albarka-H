@@ -54,10 +54,29 @@ export default function Home() {
   const [stats, setStats] = useState(fallbackStats);
   const [error, setError] = useState("");
   const [messagesData, setMessagesData] = useState([]);
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
   useEffect(() => {
         document.title = "لوحة التحكم | إدارة المحتوى"
       }, []);
+
+  useEffect(() => {
+    const handleThemeChange = () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setIsDark(savedTheme === "dark");
+      }
+    };
+    
+    window.addEventListener("storage", handleThemeChange);
+    return () => window.removeEventListener("storage", handleThemeChange);
+  }, []);
 
   // Load dashboard stats
   useEffect(() => {
@@ -165,7 +184,7 @@ export default function Home() {
   );
 
   return (
-    <div className="bg-[rgba(255,248,235,1)] min-h-screen py-8">
+    <div className={`${isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"} min-h-screen py-8 transition-colors duration-300`}>
       <div className="container mx-auto px-6">
         {/* Header Section */}
         <motion.div 
@@ -174,8 +193,8 @@ export default function Home() {
           transition={{ duration: 0.5 }}
           className="mb-10 text-center"
         >
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">لوحة التحكم الرئيسية</h1>
-          <p className="text-gray-600">نظرة عامة على إحصائيات الموقع</p>
+          <h1 className={`text-4xl font-bold mb-2 ${isDark ? "text-white" : "text-gray-800"}`}>لوحة التحكم الرئيسية</h1>
+          <p className={`${isDark ? "text-gray-400" : "text-gray-600"}`}>نظرة عامة على إحصائيات الموقع</p>
         </motion.div>
 
         {/* Stats Cards */}

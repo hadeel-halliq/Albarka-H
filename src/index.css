@@ -9,6 +9,28 @@
   --color-backGroundColor: #FFF8EB;
 }
 
+/* Light Theme (Default) */
+:root {
+  --bg-primary: #FFF8EB;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+  --border-color: #E5E7EB;
+  --card-bg: #FFFFFF;
+  --header-bg: rgba(255, 248, 235, 1);
+}
+
+/* Dark Theme */
+.dark {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --border-color: #374151;
+  --card-bg: #1f2937;
+  --header-bg: rgba(26, 26, 46, 1);
+}
+
 /* Animations for modal */
  @keyframes fadeIn {
   from {
