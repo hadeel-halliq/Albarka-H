@@ -32,7 +32,8 @@ export default function Services() {
   const loadServices = async () => {
     setLoading(true);
     try {
-      const data = await servicesService.list({ page: currentPage, limit: 20, isActive: undefined });
+      const response = await servicesService.list({ page: currentPage, limit: 20, isActive: undefined });
+      const data = response.items || response;
       setServices(data);
       setError("");
     } catch (err) {
@@ -44,7 +45,8 @@ export default function Services() {
 
   const loadImages = async () => {
     try {
-      const data = await mediaService.list();
+      const response = await mediaService.list();
+      const data = response.items || response;
       setImages(data.map(item => ({
         id: item.id,
         name: item.altText || `صورة ${item.id}`,

@@ -51,7 +51,8 @@ export default function Product() {
 
   const loadProducts = async () => {
     try {
-      const products = await productsService.list();
+      const response = await productsService.list();
+      const products = response.items || response;
       const productsWithVariants = await Promise.all(
         products.map(async (product) => {
           try {
