@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import InfoCard from "./Components/InfoCard";
 import ChartCard from "./Components/ChatCard";
-import { dashboardService, getApiErrorMessage, contactsService, productsService, servicesService, mediaService } from "../../services/apiServices";
+import { dashboardService, getApiErrorMessage, contactsService, productsService, servicesService, mediaService, branchesService, socialLinksService } from "../../services/apiServices";
 
 
 const fallbackStats = {
@@ -12,6 +12,8 @@ const fallbackStats = {
   contactsCount: 0,
   visitorsCount: 0,
   imagesCount: 0,
+  branchesCount: 0,
+  socialLinksCount: 0,
 };
 
 const visitorsData = [
@@ -84,6 +86,13 @@ export default function Home() {
     const loadStats = async () => {
       try {
         const payload = await dashboardService.stats();
+        
+        // Load additional counts in parallel
+        const [branches, socialLinks] = await Promise.all([
+          branchesService.list().catch(() => []),
+          socialLinksService.list().catch(() => [])
+        ]);
+        
         if (!mounted) return;
         setStats({
           servicesCount: payload?.servicesCount || payload?.services || 0,
@@ -91,6 +100,8 @@ export default function Home() {
           contactsCount: payload?.contactsCount || payload?.messages || 0,
           visitorsCount: payload?.visitorsCount || payload?.visitors || 0,
           imagesCount: payload?.imagesCount || payload?.images || 0,
+          branchesCount: branches?.length || 0,
+          socialLinksCount: socialLinks?.length || 0,
         });
         setError("");
       } catch (err) {
@@ -171,12 +182,28 @@ export default function Home() {
         color: "from-green-400 to-green-600",
       },
       {
-        title: "الصور",
+        title: "الفروع",
         icon: visitors,
-        number: String(stats.imagesCount),
+        number: String(stats.branchesCount),
         description: "بيانات مباشرة",
         isArrow: false,
         color: "from-pink-400 to-pink-600",
+      },
+      {
+        title: "روابط التواصل",
+        icon: line,
+        number: String(stats.socialLinksCount),
+        description: "بيانات مباشرة",
+        isArrow: false,
+        color: "from-purple-400 to-purple-600",
+      },
+      {
+        title: "الصور",
+        icon: orangMessage,
+        number: String(stats.imagesCount),
+        description: "بيانات مباشرة",
+        isArrow: false,
+        color: "from-teal-400 to-teal-600",
       },
     ],
     [stats]
@@ -197,7 +224,7 @@ export default function Home() {
         </motion.div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {infoArray.map((card, index) => (
             <motion.div
               key={index}
