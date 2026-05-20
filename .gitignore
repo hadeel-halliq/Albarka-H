@@ -2,62 +2,6 @@
 # Dependencies
 node_modules/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.ENV
-.python-version
-
-# Build outputs
-dist/
-build/
-*.egg-info/
-
-# Logs
-*.log
-
-# Environment variables
-.env
-.env.local
-*.env.*
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Coverage
-.coverage
-coverage/
-htmlcov/
-
-# MyPy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# PyTest
-.pytest_cache/
-
-# General
-*.out
-*.class
-*.o
-*.obj
-*.a
-*.so
-*.dll
-*.exe
+# Package lock
+.package-lock.json
 ```
