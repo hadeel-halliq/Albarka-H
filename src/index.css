@@ -18,6 +18,10 @@
   --border-color: #E5E7EB;
   --card-bg: #FFFFFF;
   --header-bg: rgba(255, 248, 235, 1);
+  --sidebar-bg: #FFFFFF;
+  --modal-bg: #FFFFFF;
+  --input-bg: #FFFFFF;
+  --table-row-hover: #F9FAFB;
 }
 
 /* Dark Theme */
@@ -29,6 +33,10 @@
   --border-color: #374151;
   --card-bg: #1f2937;
   --header-bg: rgba(26, 26, 46, 1);
+  --sidebar-bg: #1f2937;
+  --modal-bg: #1f2937;
+  --input-bg: #374151;
+  --table-row-hover: #374151;
 }
 
 /* Animations for modal */
@@ -59,6 +67,5 @@
 .animate-slideUp {
   animation: slideUp 0.3s ease-out;
 }
-
 
 

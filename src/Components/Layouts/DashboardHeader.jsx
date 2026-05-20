@@ -10,21 +10,16 @@ import { FiSun, FiMoon } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { authService } from "../../services/apiServices";
+import { useTheme } from "../../hooks/useTheme";
 
 import logo2 from "../../images/logo2.png";
 import market from "../../images/market.png";
 import orangePen from "../../images/orangePen.png";
 
-export default function DashboardHeader({ isOpen, handleClick }) {
+export default function DashboardHeader() {
+  const { isDark, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [adminName, setAdminName] = useState("مرحبا");
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      return savedTheme === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
   const location = useLocation();
   const iconStyle = "text-3xl cursor-pointer text-primary";
 
@@ -43,19 +38,6 @@ export default function DashboardHeader({ isOpen, handleClick }) {
     };
     fetchAdminName();
   }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
-
-  const toggleTheme = () => setIsDark(!isDark);
 
   const titles = {
     "/home": {
