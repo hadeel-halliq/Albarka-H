@@ -6,18 +6,15 @@ import { FiSettings } from "react-icons/fi";
 import { FiImage } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import { FiMapPin } from "react-icons/fi";
-import { FiSun, FiMoon } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { authService } from "../../services/apiServices";
-import { useTheme } from "../../hooks/useTheme";
 
 import logo2 from "../../images/logo2.png";
 import market from "../../images/market.png";
 import orangePen from "../../images/orangePen.png";
 
 export default function DashboardHeader() {
-  const { isDark, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [adminName, setAdminName] = useState("مرحبا");
   const location = useLocation();
@@ -82,9 +79,7 @@ export default function DashboardHeader() {
 
   return (
     <div
-      className={`w-full py-4 sticky top-0 z-50 transition-colors duration-300 ${
-        isDark ? "bg-[rgba(26,26,46,1)]" : "bg-[rgba(255,248,235,1)]"
-      } ${
+      className={`w-full py-4 sticky top-0 z-50 transition-colors duration-300 bg-[rgba(255,248,235,1)] ${
         isScrolled ? "shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]" : "shadow-none "
       }`}
     >
@@ -94,7 +89,7 @@ export default function DashboardHeader() {
             <Link to="/">
               <img src={logo2} alt="circleIcon" className="w-[50px]" />
             </Link>
-            <h2 className={`hidden xl:block ${isDark ? "text-white" : "text-gray-800"}`}>{adminName}</h2>
+            <h2 className={`hidden xl:block text-gray-800`}>{adminName}</h2>
           </div>
           <div className="xl:hidden">
             {/* <button >
@@ -127,7 +122,7 @@ export default function DashboardHeader() {
 
         {mainTitle && (
           <div className="flex justify-center items-center gap-2">
-            <h2 className={`font-bold text-2xl ${isDark ? "text-white" : "text-gray-800"}`}>{mainTitle.text}</h2>
+            <h2 className={`font-bold text-2xl text-gray-800`}>{mainTitle.text}</h2>
             {mainTitle.isImage ? (
               <img src={mainTitle.image} alt={mainTitle.text} />
             ) : (
@@ -135,21 +130,6 @@ export default function DashboardHeader() {
             )}
           </div>
         )}
-
-        {/* Theme Toggle Button */}
-        <button
-          onClick={toggleTheme}
-          className={`p-2 rounded-full transition-colors ${
-            isDark ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"
-          }`}
-          aria-label="Toggle theme"
-        >
-          {isDark ? (
-            <FiSun className="w-6 h-6 text-primary" />
-          ) : (
-            <FiMoon className="w-6 h-6 text-primary" />
-          )}
-        </button>
       </div>
     </div>
   );
