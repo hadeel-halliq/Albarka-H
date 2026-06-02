@@ -1,3 +1,5 @@
+
+
 import { FaBars } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
@@ -14,7 +16,7 @@ import logo2 from "../../images/logo2.png";
 import market from "../../images/market.png";
 import orangePen from "../../images/orangePen.png";
 
-export default function DashboardHeader() {
+export default function DashboardHeader({ isOpen, setIsOpen }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [adminName, setAdminName] = useState("مرحبا");
   const location = useLocation();
@@ -70,7 +72,7 @@ export default function DashboardHeader() {
   };
 
   const mainTitle = titles[location.pathname]; 
-
+  
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
@@ -92,7 +94,7 @@ export default function DashboardHeader() {
             <h2 className={`hidden xl:block text-gray-800`}>{adminName}</h2>
           </div>
           <div className="xl:hidden">
-            {/* <button >
+            <button onClick={() => setIsOpen(!isOpen)}>
               <AnimatePresence mode="wait" initial={false}>
                 {isOpen ? (
                   <Motion.div
@@ -116,7 +118,7 @@ export default function DashboardHeader() {
                   </Motion.div>
                 )}
               </AnimatePresence>
-            </button> */}
+            </button>
           </div>
         </div>
 
