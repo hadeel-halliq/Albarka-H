@@ -1,4 +1,3 @@
-
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { FiGlobe } from "react-icons/fi";
 import { FiSettings } from "react-icons/fi";
